@@ -1,0 +1,81 @@
+@email="yezy@gmail.com"
+@name="이예지"
+@password="password123"
+@passwordCheck="password123"
+
+# @name 회원가입 성공
+POST http://localhost:8080/api/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": {{email}},
+  "name": {{name}},
+  "password": {{password}},
+  "passwordCheck": {{passwordCheck}}
+}
+
+###
+
+# @name 회원가입 실패 - 중복된 이메일
+POST http://localhost:8080/api/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": {{email}},
+  "name": {{name}},
+  "password": {{password}},
+  "passwordCheck": {{passwordCheck}}
+}
+
+###
+
+# @name 회원가입 실패 - 비밀번호 불일치
+POST http://localhost:8080/api/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": "yezyaa@gmail.com",
+  "name": {{name}},
+  "password": {{password}},
+  "passwordCheck": "password1234"
+}
+
+###
+
+# @name 회원가입 실패 - 유효성 검증(잘못된 이메일 형식)
+POST http://localhost:8080/api/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": "yezy#gmail.com",
+  "name": {{name}},
+  "password": {{password}},
+  "passwordCheck": {{passwordCheck}}
+}
+
+###
+
+# @name 회원가입 실패 - 유효성 검증(필드 누락)
+POST http://localhost:8080/api/auth/sign-up
+Content-Type: application/json
+
+{
+  "name": {{name}},
+  "password": {{password}},
+  "passwordCheck": {{passwordCheck}}
+}
+
+###
+
+# @name 회원가입 실패 - 잘못된 json 형식
+POST http://localhost:8080/api/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": ,
+  "name": {{name}},
+  "password": {{password}},
+  "passwordCheck": {{passwordCheck}}
+}
+
+###
