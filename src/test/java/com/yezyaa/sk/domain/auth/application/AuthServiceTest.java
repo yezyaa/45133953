@@ -1,8 +1,10 @@
 package com.yezyaa.sk.domain.auth.application;
 
+import com.yezyaa.sk.domain.auth.api.dto.SignInRequest;
 import com.yezyaa.sk.domain.auth.api.dto.SignUpRequest;
 import com.yezyaa.sk.domain.auth.domain.Member;
 import com.yezyaa.sk.domain.auth.exception.DuplicateEmailException;
+import com.yezyaa.sk.domain.auth.exception.InvalidEmailOrPasswordException;
 import com.yezyaa.sk.domain.auth.exception.PasswordMismatchException;
 import com.yezyaa.sk.domain.auth.repository.AuthRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -89,5 +91,62 @@ class AuthServiceTest {
 
         // expected
         assertThrows(PasswordMismatchException.class, () -> authService.signUp(signUpRequest));
+    }
+
+    @Test
+    @DisplayName("로그인 성공 - AccessToken 발급")
+    void signInSuccess() {
+        // given
+        Member member = authRepository.save(Member.of(
+                "yezy@gmail.com",
+                "이예지",
+                passwordEncoder.encode("password123")
+        ));
+
+        SignInRequest signInRequest = new SignInRequest(
+                "yezy@gmail.com",
+                "password123"
+        );
+
+        // when
+        String accessToken = authService.signIn(signInRequest);
+
+        // then
+        Member updatedMember = authRepository.findById(member.getId()).orElseThrow();
+        assertEquals(updatedMember.getAccessToken(), accessToken);
+    }
+
+    @Test
+    @DisplayName("로그인 실패 - 잘못된 이메일")
+    void signInFailsWithInvalidEmail() {
+        // given
+        SignInRequest signInRequest = new SignInRequest(
+                "yezy@gmail.com",
+                "password123"
+        );
+
+        // expected
+        assertThrows(InvalidEmailOrPasswordException.class,
+                () -> authService.signIn(signInRequest));
+    }
+
+    @Test
+    @DisplayName("로그인 실패 - 잘못된 비밀번호")
+    void signInFailsWithInvalidPassword() {
+        // given
+        authRepository.save(Member.of(
+                "yezy@gmail.com",
+                "이예지",
+                passwordEncoder.encode("password123")
+        ));
+
+        SignInRequest signInRequest = new SignInRequest(
+                "yezy@gmail.com",
+                "password1234"
+        );
+
+        // expected
+        assertThrows(InvalidEmailOrPasswordException.class,
+                () -> authService.signIn(signInRequest));
     }
 }
