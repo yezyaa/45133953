@@ -54,4 +54,22 @@ public class BoardController {
                         null
                 ));
     }
+
+    // 게시글 삭제
+    @DeleteMapping("/{boardId}")
+    public ResponseEntity<ApiSuccessResponse<Void>> deleteBoard(
+            @CurrentUser CustomUserDetails userDetails,
+            @PathVariable Long boardId,
+            HttpServletRequest servletRequest
+    ) {
+        boardService.deleteBoard(userDetails.getMemberId(), boardId);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.NO_CONTENT,
+                        servletRequest.getServletPath(),
+                        null
+                ));
+    }
+
 }
