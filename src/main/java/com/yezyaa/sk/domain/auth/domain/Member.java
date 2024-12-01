@@ -47,4 +47,8 @@ public class Member {
         user.password = password;
         return user;
     }
+
+    public void updateAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 }
