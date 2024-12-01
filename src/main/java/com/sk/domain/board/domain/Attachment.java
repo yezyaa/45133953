@@ -27,8 +27,9 @@ public class Attachment {
     @Column(name = "file_name", nullable = false)
     private String fileName; // 파일 이름
 
-    @Column(name = "file_url", nullable = false)
-    private String fileUrl; // 파일 경로
+    @Lob
+    @Column(name = "file_data", nullable = false, columnDefinition = "LONGBLOB")
+    private byte[] fileData; // 파일 데이터
 
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = false; // 삭제 여부
@@ -41,11 +42,11 @@ public class Attachment {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public static Attachment of(Board board, String fileName, String fileUrl) {
+    public static Attachment of(Board board, String fileName, byte[] fileData) {
         Attachment attachment = new Attachment();
         attachment.board = board;
         attachment.fileName = fileName;
-        attachment.fileUrl = fileUrl;
+        attachment.fileData = fileData;
         return attachment;
     }
 
