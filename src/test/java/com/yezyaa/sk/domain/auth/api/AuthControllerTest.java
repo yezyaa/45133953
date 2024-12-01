@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -238,4 +239,49 @@ class AuthControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("로그아웃 성공")
+    void signOutSuccess() throws Exception {
+        // given
+        Member member = authRepository.save(Member.of(
+                "yezy@gmail.com",
+                "이예지",
+                passwordEncoder.encode("password123")
+        ));
+
+        SignInRequest signInRequest = new SignInRequest(
+                "yezy@gmail.com",
+                "password123"
+        );
+
+        // 로그인 요청하여 AccessToken 받아옴
+        String accessToken = mockMvc.perform(post("/api/auth/sign-in")
+                        .content(objectMapper.writeValueAsString(signInRequest))
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.accessToken").isNotEmpty())
+                .andReturn().getResponse().getHeader("Authorization");
+
+        // when
+        // 로그아웃 요청
+        mockMvc.perform(post("/api/auth/sign-out")
+                        .header("Authorization", accessToken))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        // then
+        // 로그아웃 후 토큰이 삭제되었는지 확인
+        Member updatedMember = authRepository.findById(member.getId()).orElseThrow();
+        assertNull(updatedMember.getAccessToken());
+    }
+
+    @Test
+    @DisplayName("로그아웃 실패 - 유효하지 않은 토큰")
+    void signOutFailsWithInvalidToken() throws Exception {
+        // when
+        mockMvc.perform(post("/api/auth/sign-out")
+                        .header("Authorization", "Bearer invalid_token"))
+                .andExpect(status().isUnauthorized())
+                .andDo(print());
+    }
 }

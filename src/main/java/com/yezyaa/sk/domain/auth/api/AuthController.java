@@ -64,4 +64,18 @@ public class AuthController {
                         "인증 성공"
                 ));
     }
+
+    // 로그아웃
+    @PostMapping("/sign-out")
+    public ResponseEntity<ApiSuccessResponse<Void>> signOut(HttpServletRequest servRequest) {
+        String accessToken = jwtTokenProvider.resolveToken(servRequest);
+        authService.signOut(accessToken);
+        return ResponseEntity.ok()
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        null
+                ));
+    }
+
 }

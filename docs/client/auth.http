@@ -88,5 +88,15 @@ Content-Type: application/json
   "email": {{email}},
   "password": {{password}}
 }
+> {%
+    client.global.set("accessToken", response.headers.valueOf("Authorization").substring(7));
+%}
+
+###
+
+# @name 로그아웃 성공
+POST http://localhost:8080/api/auth/sign-out
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
 ###
