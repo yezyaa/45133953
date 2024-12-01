@@ -1,0 +1,56 @@
+@email="yezy@gmail.com"
+@name="이예지"
+@password="password123"
+@passwordCheck="password123"
+
+# @name 회원가입 성공
+POST http://localhost:8080/api/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": {{email}},
+  "name": {{name}},
+  "password": {{password}},
+  "passwordCheck": {{passwordCheck}}
+}
+
+###
+
+# @name 로그인 성공
+POST http://localhost:8080/api/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": {{email}},
+  "password": {{password}}
+}
+> {%
+    client.global.set("accessToken", response.headers.valueOf("Authorization").substring(7));
+%}
+
+###
+
+# @name 게시글 작성
+POST http://localhost:8080/api/board
+Content-Type: multipart/form-data; boundary=boundary
+Authorization: Bearer {{accessToken}}
+
+--boundary
+Content-Disposition: form-data; name="title"
+
+게시글 제목
+--boundary
+Content-Disposition: form-data; name="content"
+
+게시글 내용
+--boundary
+Content-Disposition: form-data; name="files"; filename="image1.jpg";
+Content-Type: image/jpg
+
+< image1.jpg
+--boundary
+Content-Disposition: form-data; name="files"; filename="image2.jpg";
+Content-Type: image/jpg
+
+< image2.jpg
+--boundary--
