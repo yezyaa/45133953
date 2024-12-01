@@ -22,6 +22,10 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         format_sql: true  # 포맷된 SQL 출력
         show_sql: true    # SQL 로그 출력
+  servlet:
+    multipart:
+      max-file-size: 10MB    # 업로드할 파일의 최대 크기
+      max-request-size: 10MB # 요청 전체 크기 제한
 
 jwt:
   secret: "kRa/gVjXVrlL4MWT8vKyDe5oFO6E6fMBldObKPKZTxO6MKzYb0Nc56Qgivr6nqGr9SXR3/uTXehmUbeD7QE9ug=="
