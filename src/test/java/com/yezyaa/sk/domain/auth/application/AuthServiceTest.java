@@ -3,9 +3,7 @@ package com.yezyaa.sk.domain.auth.application;
 import com.yezyaa.sk.domain.auth.api.dto.SignInRequest;
 import com.yezyaa.sk.domain.auth.api.dto.SignUpRequest;
 import com.yezyaa.sk.domain.auth.domain.Member;
-import com.yezyaa.sk.domain.auth.exception.DuplicateEmailException;
-import com.yezyaa.sk.domain.auth.exception.InvalidEmailOrPasswordException;
-import com.yezyaa.sk.domain.auth.exception.PasswordMismatchException;
+import com.yezyaa.sk.domain.auth.exception.*;
 import com.yezyaa.sk.domain.auth.repository.AuthRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -148,5 +146,35 @@ class AuthServiceTest {
         // expected
         assertThrows(InvalidEmailOrPasswordException.class,
                 () -> authService.signIn(signInRequest));
+    }
+
+    @Test
+    @DisplayName("로그아웃 성공")
+    void signOutSuccess() {
+        // given
+        Member member = authRepository.save(Member.of(
+                "yezy@gmail.com",
+                "이예지",
+                passwordEncoder.encode("password123")
+        ));
+        String accessToken = authService.signIn(new SignInRequest(
+                "yezy@gmail.com",
+                "password123"
+        ));
+
+        // when
+        authService.signOut(accessToken);
+
+        // then
+        Member updatedMember = authRepository.findById(member.getId()).orElseThrow();
+        assertNull(updatedMember.getAccessToken());
+    }
+
+    @Test
+    @DisplayName("로그아웃 실패 - 유효하지 않는 토큰")
+    void signOutFailsWithNonExistentUser() {
+        // expected
+        assertThrows(InvalidTokenException.class, ()
+                -> authService.signOut("invalid_token"));
     }
 }
