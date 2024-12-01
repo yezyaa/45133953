@@ -3,9 +3,7 @@ package com.yezyaa.sk.domain.auth.application;
 import com.yezyaa.sk.domain.auth.api.dto.SignInRequest;
 import com.yezyaa.sk.domain.auth.api.dto.SignUpRequest;
 import com.yezyaa.sk.domain.auth.domain.Member;
-import com.yezyaa.sk.domain.auth.exception.DuplicateEmailException;
-import com.yezyaa.sk.domain.auth.exception.InvalidEmailOrPasswordException;
-import com.yezyaa.sk.domain.auth.exception.PasswordMismatchException;
+import com.yezyaa.sk.domain.auth.exception.*;
 import com.yezyaa.sk.domain.auth.repository.AuthRepository;
 import com.yezyaa.sk.global.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -63,4 +61,22 @@ public class AuthService {
         member.updateAccessToken(accessToken);
         return accessToken;
     }
+
+    // 로그아웃
+    @Transactional
+    public void signOut(String accessToken) {
+        
+        // AccessToken 검증
+        if (!jwtTokenProvider.validateToken(accessToken)) {
+            throw new InvalidTokenException();
+        }
+
+        Long userId = jwtTokenProvider.extractUserId(accessToken); // 토큰에서 사용자 ID 추출
+
+        Member member = authRepository.findById(userId) // 사용자 조회
+                .orElseThrow(UserNotFoundException::new);
+
+        member.clearAccessToken(); // AccessToken 삭제
+    }
+
 }
