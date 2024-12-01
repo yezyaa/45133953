@@ -50,7 +50,7 @@ public class Board {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Attachment> attachments = new ArrayList<>();
 
     public static Board of(Member member, String title, String content, boolean hasAttachments) {
