@@ -36,6 +36,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Member member = authRepository.findById(userId) // 사용자 조회
                     .orElseThrow(UserNotFoundException::new);
 
+            // 로그아웃 여부 확인
+            if (member.getAccessToken() == null || !token.equals(member.getAccessToken())) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("text/plain; charset=UTF-8");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("로그아웃된 사용자입니다.");
+                return;
+            }
+
             // SecurityContext에 인증 정보 저장
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(userId, null, null);
