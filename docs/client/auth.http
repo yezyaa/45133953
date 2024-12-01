@@ -79,3 +79,14 @@ Content-Type: application/json
 }
 
 ###
+
+# @name 로그인 성공
+POST http://localhost:8080/api/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": {{email}},
+  "password": {{password}}
+}
+
+###

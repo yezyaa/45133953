@@ -1,6 +1,7 @@
 package com.yezyaa.sk.domain.auth.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yezyaa.sk.domain.auth.api.dto.SignInRequest;
 import com.yezyaa.sk.domain.auth.api.dto.SignUpRequest;
 import com.yezyaa.sk.domain.auth.domain.Member;
 import com.yezyaa.sk.domain.auth.repository.AuthRepository;
@@ -15,8 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -120,4 +122,120 @@ class AuthControllerTest {
                 .andExpect(status().isBadRequest())
                 .andDo(print());
     }
+
+    @Test
+    @DisplayName("로그인 성공 - AccessToken 발급")
+    void signInSuccess() throws Exception {
+        // given
+        authRepository.save(Member.of(
+                "yezy@gmail.com",
+                "이예지",
+                passwordEncoder.encode("password123")
+        ));
+
+        SignInRequest signInRequest = new SignInRequest(
+                "yezy@gmail.com",
+                "password123"
+        );
+
+        // when
+        mockMvc.perform(post("/api/auth/sign-in")
+                        .content(objectMapper.writeValueAsString(signInRequest))
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk()) // 200 OK 응답 예상
+                .andExpect(jsonPath("$.data.accessToken").isNotEmpty()) // 응답 JSON에서 accessToken 확인
+                .andExpect(header().string("Authorization", org.hamcrest.Matchers.startsWith("Bearer "))) // Authorization 헤더 검증
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("로그인 실패 - 존재하지 않는 이메일")
+    void signInFailsWithInvalidEmail() throws Exception {
+        // given
+        SignInRequest signInRequest = new SignInRequest(
+                "yezy@gmail.com",
+                "password123"
+        );
+
+        // expected
+        mockMvc.perform(post("/api/auth/sign-in")
+                        .content(objectMapper.writeValueAsString(signInRequest))
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("로그인 실패 - 잘못된 비밀번호")
+    void signInFailsWithInvalidPassword() throws Exception {
+        // given
+        authRepository.save(Member.of(
+                "yezy@gmail.com",
+                "이예지",
+                passwordEncoder.encode("password123")
+        ));
+
+        SignInRequest signInRequest = new SignInRequest(
+                "yezy@gmail.com",
+                "password1234"
+        );
+
+        // expected
+        mockMvc.perform(post("/api/auth/sign-in")
+                        .content(objectMapper.writeValueAsString(signInRequest))
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("로그인 실패 - 잘못된 이메일 형식")
+    void signInFailsWithInvalidEmailFormat() throws Exception {
+        // given
+        SignInRequest signInRequest = new SignInRequest(
+                "yezy#gmail.com",
+                "password123"
+        );
+
+        // expected
+        mockMvc.perform(post("/api/auth/sign-in")
+                        .content(objectMapper.writeValueAsString(signInRequest))
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("로그인 인증 성공 테스트")
+    void accessTokenTest() throws Exception {
+        // given
+        authRepository.save(Member.of(
+                "yezy@gmail.com",
+                "이예지",
+                passwordEncoder.encode("password123")
+        ));
+
+        SignInRequest signInRequest = new SignInRequest(
+                "yezy@gmail.com",
+                "password123"
+        );
+
+        // when
+        // 로그인 요청하여 AccessToken 받아옴
+        String accessToken = mockMvc.perform(post("/api/auth/sign-in")
+                        .content(objectMapper.writeValueAsString(signInRequest))
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.accessToken").isNotEmpty()) // 응답 JSON에서 accessToken 확인
+                .andReturn().getResponse().getHeader("Authorization"); // Authorization 헤더에서 토큰 추출
+
+        // then
+        // 받은 AccessToken 이용하여 API 호출
+        mockMvc.perform(get("/api/auth/data")
+                        .header("Authorization", accessToken))  // 토큰을 헤더로 전달
+                .andExpect(status().isOk()) // 인증된 사용자 접근 가능
+                .andExpect(jsonPath("$.data").value("인증 성공")) // 인증 성공 메시지 확인
+                .andDo(print());
+    }
+
 }
