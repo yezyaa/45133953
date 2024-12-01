@@ -1,6 +1,7 @@
 package com.sk.domain.board.api;
 
 import com.sk.domain.board.api.dto.BoardCreateRequest;
+import com.sk.domain.board.api.dto.BoardUpdateRequest;
 import com.sk.domain.board.application.BoardService;
 import com.sk.global.dto.ApiSuccessResponse;
 import com.sk.global.security.CustomUserDetails;
@@ -10,10 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +32,24 @@ public class BoardController {
                 .status(HttpStatus.CREATED)
                 .body(ApiSuccessResponse.of(
                         HttpStatus.CREATED,
+                        servletRequest.getServletPath(),
+                        null
+                ));
+    }
+
+    // 게시글 수정
+    @PutMapping("/{boardId}")
+    public ResponseEntity<ApiSuccessResponse<Void>> updateBoard(
+            @CurrentUser CustomUserDetails userDetails,
+            @PathVariable Long boardId,
+            @Valid @ModelAttribute BoardUpdateRequest boardUpdateRequest,
+            HttpServletRequest servletRequest
+    ) {
+        boardService.updateBoard(userDetails.getMemberId(), boardId, boardUpdateRequest);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
                         servletRequest.getServletPath(),
                         null
                 ));

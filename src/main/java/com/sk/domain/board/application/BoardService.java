@@ -1,11 +1,15 @@
 package com.sk.domain.board.application;
 
 import com.sk.domain.auth.domain.Member;
+import com.sk.domain.auth.exception.AccessDeniedException;
 import com.sk.domain.auth.exception.UserNotFoundException;
 import com.sk.domain.auth.repository.AuthRepository;
 import com.sk.domain.board.api.dto.BoardCreateRequest;
+import com.sk.domain.board.api.dto.BoardUpdateRequest;
 import com.sk.domain.board.domain.Attachment;
 import com.sk.domain.board.domain.Board;
+import com.sk.domain.board.exception.AttachmentNotFoundException;
+import com.sk.domain.board.exception.BoardNotFoundException;
 import com.sk.domain.board.repository.AttachmentRepository;
 import com.sk.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +29,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final AttachmentRepository attachmentRepository;
 
+    // 게시글 작성
     @Transactional
     public void createBoard(Long memberId, BoardCreateRequest boardCreateRequest) {
 
@@ -49,6 +54,54 @@ public class BoardService {
         }
     }
 
+    // 게시글 수정
+    @Transactional
+    public void updateBoard(Long memberId, Long boardId, BoardUpdateRequest boardUpdateRequest) {
+
+        // 게시글 조회
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(BoardNotFoundException::new);
+
+        // 작성자 확인
+        if (!board.getMember().getId().equals(memberId)) {
+            throw new AccessDeniedException();
+        }
+
+        // 게시글 수정
+        board.update(
+                boardUpdateRequest.title(),
+                boardUpdateRequest.content(),
+                boardUpdateRequest.attachments() != null && !boardUpdateRequest.attachments().isEmpty()
+        );
+
+        // 첨부파일 삭제
+        if (boardUpdateRequest.deleteAttachmentIds() != null && !boardUpdateRequest.deleteAttachmentIds().isEmpty()) {
+            List<Attachment> attachmentsToDelete = attachmentRepository.findAllById(boardUpdateRequest.deleteAttachmentIds());
+
+            for (Attachment attachment : attachmentsToDelete) {
+                // 첨부파일이 이미 삭제된 경우 예외 발생
+                if (attachment.isDeleted()) {
+                    throw new AttachmentNotFoundException();
+                }
+
+                // 첨부파일 삭제 처리
+                if (!attachment.getBoard().getId().equals(boardId)) {
+                    throw new AttachmentNotFoundException();
+                }
+
+                attachment.delete();
+            }
+        }
+
+        // 새로운 첨부파일 추가
+        if (boardUpdateRequest.attachments() != null && !boardUpdateRequest.attachments().isEmpty()) {
+            List<Attachment> newAttachments = boardUpdateRequest.attachments().stream()
+                    .map(file -> createAttachment(board, file))
+                    .toList();
+            attachmentRepository.saveAll(newAttachments);
+        }
+    }
+
     private Attachment createAttachment(Board board, MultipartFile file) {
         try {
             return Attachment.of(board, file.getOriginalFilename(), file.getBytes());
@@ -56,4 +109,5 @@ public class BoardService {
             throw new RuntimeException("파일 데이터를 처리하는 중 오류가 발생했습니다.", e);
         }
     }
+
 }
