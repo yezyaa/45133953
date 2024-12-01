@@ -51,4 +51,8 @@ public class Member {
     public void updateAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
+
+    public void clearAccessToken() {
+        this.accessToken = null;
+    }
 }
