@@ -3,6 +3,7 @@ package com.sk.global.security.filter;
 import com.sk.domain.auth.domain.Member;
 import com.sk.domain.auth.exception.UserNotFoundException;
 import com.sk.domain.auth.repository.AuthRepository;
+import com.sk.global.security.CustomUserDetails;
 import com.sk.global.security.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
@@ -45,9 +47,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
+            // CustomUserDetails 생성
+            CustomUserDetails userDetails = new CustomUserDetails(member, Collections.emptyList());
+
             // SecurityContext에 인증 정보 저장
             UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(userId, null, null);
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
