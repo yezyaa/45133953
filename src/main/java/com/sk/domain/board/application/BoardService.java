@@ -102,6 +102,19 @@ public class BoardService {
         }
     }
 
+    // 게시글 삭제
+    @Transactional
+    public void deleteBoard(Long memberId, Long boardId) {
+        Board board = boardRepository.findByIdAndIsDeletedFalse(boardId)
+                .orElseThrow(BoardNotFoundException::new);
+
+        if (!board.getMember().getId().equals(memberId)) {
+            throw new AccessDeniedException();
+        }
+
+        board.delete();
+    }
+
     private Attachment createAttachment(Board board, MultipartFile file) {
         try {
             return Attachment.of(board, file.getOriginalFilename(), file.getBytes());
@@ -109,5 +122,4 @@ public class BoardService {
             throw new RuntimeException("파일 데이터를 처리하는 중 오류가 발생했습니다.", e);
         }
     }
-
 }
