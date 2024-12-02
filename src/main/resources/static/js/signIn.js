@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
                 // AccessToken 저장
-                localStorage.setItem('accessToken', data.accessToken);
+                localStorage.setItem('accessToken', data.data.accessToken);
 
                 // 로그인 성공 메시지 및 페이지 이동
                 alert('로그인 성공!');
