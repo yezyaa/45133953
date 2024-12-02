@@ -188,3 +188,20 @@ form button:hover {
 .signup-link a:hover {
     text-decoration: underline;
 }
+
+.signin-link {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.signin-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signin-link a:hover {
+    text-decoration: underline;
+}
+
