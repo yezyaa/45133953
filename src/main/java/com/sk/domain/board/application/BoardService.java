@@ -4,7 +4,9 @@ import com.sk.domain.auth.domain.Member;
 import com.sk.domain.auth.exception.AccessDeniedException;
 import com.sk.domain.auth.exception.UserNotFoundException;
 import com.sk.domain.auth.repository.AuthRepository;
+import com.sk.domain.board.api.dto.AttachmentResponse;
 import com.sk.domain.board.api.dto.BoardCreateRequest;
+import com.sk.domain.board.api.dto.BoardDetailResponse;
 import com.sk.domain.board.api.dto.BoardUpdateRequest;
 import com.sk.domain.board.domain.Attachment;
 import com.sk.domain.board.domain.Board;
@@ -115,6 +117,37 @@ public class BoardService {
         board.delete();
     }
 
+    // 게시글 상세 조회
+    @Transactional
+    public BoardDetailResponse getBoard(Long boardId) {
+
+        // 삭제되지 않은 게시글 조회
+        Board board = boardRepository.findByIdAndIsDeletedFalse(boardId)
+                .orElseThrow(BoardNotFoundException::new);
+
+        // 조회수 증가
+        board.increaseViews();
+
+        // 첨부파일 조회
+        List<AttachmentResponse> attachments = board.getAttachments().stream()
+                .filter(attachment -> !attachment.isDeleted()) // 삭제되지 않은 첨부파일만 포함
+                .map(attachment -> new AttachmentResponse(
+                        attachment.getId(),
+                        attachment.getFileName()
+                ))
+                .toList();
+
+        return new BoardDetailResponse(
+                board.getId(),
+                board.getMember().getEmail(),
+                board.getTitle(),
+                board.getContent(),
+                board.getViews(),
+                board.getCreatedAt(),
+                attachments
+        );
+    }
+    
     private Attachment createAttachment(Board board, MultipartFile file) {
         try {
             return Attachment.of(board, file.getOriginalFilename(), file.getBytes());
