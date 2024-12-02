@@ -33,6 +33,7 @@ public class SecurityConfig {
                                 "/",
                                 "/index.html",
                                 "/boardList.html",
+                                "/signIn.html",
                                 "/css/**",
                                 "/js/**",
                                 "/images/**"
