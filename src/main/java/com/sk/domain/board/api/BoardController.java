@@ -1,6 +1,7 @@
 package com.sk.domain.board.api;
 
 import com.sk.domain.board.api.dto.BoardCreateRequest;
+import com.sk.domain.board.api.dto.BoardDetailResponse;
 import com.sk.domain.board.api.dto.BoardUpdateRequest;
 import com.sk.domain.board.application.BoardService;
 import com.sk.global.dto.ApiSuccessResponse;
@@ -69,6 +70,21 @@ public class BoardController {
                         HttpStatus.NO_CONTENT,
                         servletRequest.getServletPath(),
                         null
+                ));
+    }
+
+    // 게시글 상세 조회
+    @GetMapping("/{boardId}")
+    public ResponseEntity<ApiSuccessResponse<BoardDetailResponse>> getBoard(
+            @PathVariable Long boardId,
+            HttpServletRequest servletRequest
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servletRequest.getServletPath(),
+                        boardService.getBoard(boardId)
                 ));
     }
 
