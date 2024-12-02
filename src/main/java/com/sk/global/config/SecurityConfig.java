@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -35,6 +36,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(AUTH_API_URL).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/board").permitAll()                  // 게시글 목록 조회
+                        .requestMatchers(HttpMethod.GET, "/api/board/{boardId}").permitAll()        // 게시글 상세 조회
+                        .requestMatchers(HttpMethod.POST, "/api/board").authenticated()             // 게시글 작성
+                        .requestMatchers(HttpMethod.PUT, "/api/board/{boardId}").authenticated()    // 게시글 수정
+                        .requestMatchers(HttpMethod.DELETE, "/api/board/{boardId}").authenticated() // 게시글 삭제
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // 정적 리소스
                         .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
