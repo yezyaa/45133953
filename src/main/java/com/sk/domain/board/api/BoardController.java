@@ -2,6 +2,7 @@ package com.sk.domain.board.api;
 
 import com.sk.domain.board.api.dto.BoardCreateRequest;
 import com.sk.domain.board.api.dto.BoardDetailResponse;
+import com.sk.domain.board.api.dto.BoardListResponse;
 import com.sk.domain.board.api.dto.BoardUpdateRequest;
 import com.sk.domain.board.application.BoardService;
 import com.sk.global.dto.ApiSuccessResponse;
@@ -10,9 +11,14 @@ import com.sk.global.security.annotations.CurrentUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -88,4 +94,18 @@ public class BoardController {
                 ));
     }
 
+    // 게시글 목록 조회
+    @GetMapping
+    public ResponseEntity<ApiSuccessResponse<List<BoardListResponse>>> getBoards(
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+            HttpServletRequest servletRequest
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servletRequest.getServletPath(),
+                        boardService.getBoards(pageable)
+                ));
+    }
 }
