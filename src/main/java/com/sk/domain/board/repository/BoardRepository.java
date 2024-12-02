@@ -12,4 +12,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Optional<Board> findByIdAndIsDeletedFalse(Long boardId);
     Page<Board> findAllByIsDeletedFalse(Pageable pageable);
 
+    // 제목이나 작성자ID(email)로 검색
+    Page<Board> findByTitleContainingOrMemberEmailContainingAndIsDeletedFalse(String title, String memberId, Pageable pageable);
+
 }

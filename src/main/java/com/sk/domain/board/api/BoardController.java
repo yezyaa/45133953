@@ -11,14 +11,13 @@ import com.sk.global.security.annotations.CurrentUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -96,7 +95,8 @@ public class BoardController {
 
     // 게시글 목록 조회
     @GetMapping
-    public ResponseEntity<ApiSuccessResponse<List<BoardListResponse>>> getBoards(
+    public ResponseEntity<ApiSuccessResponse<Page<BoardListResponse>>> getBoards(
+            @RequestParam(required = false) String keyword,
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
             HttpServletRequest servletRequest
     ) {
@@ -105,7 +105,7 @@ public class BoardController {
                 .body(ApiSuccessResponse.of(
                         HttpStatus.OK,
                         servletRequest.getServletPath(),
-                        boardService.getBoards(pageable)
+                        boardService.getBoards(keyword, pageable)
                 ));
     }
 }

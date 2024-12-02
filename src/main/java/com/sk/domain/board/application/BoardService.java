@@ -12,6 +12,7 @@ import com.sk.domain.board.exception.BoardNotFoundException;
 import com.sk.domain.board.repository.AttachmentRepository;
 import com.sk.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -147,18 +148,23 @@ public class BoardService {
     }
 
     // 게시글 목록 조회
-    public List<BoardListResponse> getBoards(Pageable pageable) {
-        return boardRepository.findAllByIsDeletedFalse(pageable)
-                .stream()
-                .map(board -> new BoardListResponse(
-                        board.getId(),
-                        board.getMember().getEmail(),
-                        board.getTitle(),
-                        board.getViews(),
-                        !board.getAttachments().isEmpty(),
-                        board.getCreatedAt()
-                ))
-                .toList();
+    public Page<BoardListResponse> getBoards(String keyword, Pageable pageable) {
+        Page<Board> boards;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            boards = boardRepository.findByTitleContainingOrMemberEmailContainingAndIsDeletedFalse(keyword, keyword, pageable);
+        } else {
+            boards = boardRepository.findAllByIsDeletedFalse(pageable);
+        }
+
+        return boards.map(board -> new BoardListResponse(
+                board.getId(),
+                board.getMember().getEmail(),
+                board.getTitle(),
+                board.getViews(),
+                !board.getAttachments().isEmpty(),
+                board.getCreatedAt()
+        ));
     }
     
     private Attachment createAttachment(Board board, MultipartFile file) {
