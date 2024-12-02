@@ -4,10 +4,7 @@ import com.sk.domain.auth.domain.Member;
 import com.sk.domain.auth.exception.AccessDeniedException;
 import com.sk.domain.auth.exception.UserNotFoundException;
 import com.sk.domain.auth.repository.AuthRepository;
-import com.sk.domain.board.api.dto.AttachmentResponse;
-import com.sk.domain.board.api.dto.BoardCreateRequest;
-import com.sk.domain.board.api.dto.BoardDetailResponse;
-import com.sk.domain.board.api.dto.BoardUpdateRequest;
+import com.sk.domain.board.api.dto.*;
 import com.sk.domain.board.domain.Attachment;
 import com.sk.domain.board.domain.Board;
 import com.sk.domain.board.exception.AttachmentNotFoundException;
@@ -15,6 +12,8 @@ import com.sk.domain.board.exception.BoardNotFoundException;
 import com.sk.domain.board.repository.AttachmentRepository;
 import com.sk.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -146,6 +145,26 @@ public class BoardService {
                 board.getCreatedAt(),
                 attachments
         );
+    }
+
+    // 게시글 목록 조회
+    public Page<BoardListResponse> getBoards(String keyword, Pageable pageable) {
+        Page<Board> boards;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            boards = boardRepository.findByTitleContainingOrMemberEmailContainingAndIsDeletedFalse(keyword, keyword, pageable);
+        } else {
+            boards = boardRepository.findAllByIsDeletedFalse(pageable);
+        }
+
+        return boards.map(board -> new BoardListResponse(
+                board.getId(),
+                board.getMember().getEmail(),
+                board.getTitle(),
+                board.getViews(),
+                !board.getAttachments().isEmpty(),
+                board.getCreatedAt()
+        ));
     }
     
     private Attachment createAttachment(Board board, MultipartFile file) {
