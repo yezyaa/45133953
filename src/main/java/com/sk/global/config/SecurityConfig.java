@@ -33,11 +33,14 @@ public class SecurityConfig {
                                 "/",
                                 "/index.html",
                                 "/boardList.html",
+                                "/signIn.html",
+                                "/signUp.html",
                                 "/css/**",
                                 "/js/**",
                                 "/images/**"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/sign-up", "/api/auth/sign-in").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/sign-out").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/board").permitAll()                  // 게시글 목록 조회
                         .requestMatchers(HttpMethod.GET, "/api/board/{boardId}").permitAll()        // 게시글 상세 조회
                         .requestMatchers(HttpMethod.POST, "/api/board").authenticated()             // 게시글 작성
