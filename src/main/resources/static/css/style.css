@@ -205,3 +205,34 @@ form button:hover {
     text-decoration: underline;
 }
 
+.file-input {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.file-input input[type="file"] {
+    flex: 1;
+    padding: 0.4rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.file-input:not(:first-child) {
+    margin-top: 0;
+}
+
+.file-input input[type="file"]::-webkit-file-upload-button {
+    padding: 0.5rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.file-input input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #0056b3;
+}

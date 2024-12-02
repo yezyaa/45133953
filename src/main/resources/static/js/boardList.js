@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
 
             const accessToken = localStorage.getItem('accessToken');
-            console.log('AccessToken:', accessToken); // 콘솔에 출력하여 토큰 확인
 
             // 로그아웃 API 호출
             fetch('/api/auth/sign-out', {
