@@ -32,6 +32,7 @@ public class SecurityConfig {
                                 "/h2-console/**",
                                 "/",
                                 "/index.html",
+                                "/boardList.html",
                                 "/css/**",
                                 "/js/**",
                                 "/images/**"
