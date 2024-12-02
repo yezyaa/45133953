@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/boardList.js" defer></script>
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav-links">
+                <!-- 로그인시 회원가입이 로그아웃으로 바뀌어야하기 때문에 JavaScript에서 동적으로 네비게이션 링크 추가 -->
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+    <h1>게시판</h1>
+
+    <!-- 게시글 목록 -->
+    <section class="board-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>첨부파일 여부</th>
+                    <th>작성자 ID</th>
+                    <th>작성일</th>
+                    <th>조회수</th>
+                </tr>
+            </thead>
+            <tbody id="boardList">
+                <!-- 동적으로 게시글 데이터 생성 -->
+            </tbody>
+        </table>
+        <!-- 페이지네이션 -->
+        <div id="pagination" class="pagination"></div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 SK m&service coding test. All rights reserved.</p>
+</footer>
+</body>
+</html>
