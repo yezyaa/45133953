@@ -236,3 +236,33 @@ form button:hover {
 .file-input input[type="file"]::-webkit-file-upload-button:hover {
     background-color: #0056b3;
 }
+
+#boardDetail {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+#backToListButton {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#backToListButton:hover {
+    background-color: #0056b3;
+}
+
+table tr {
+    cursor: pointer;
+}

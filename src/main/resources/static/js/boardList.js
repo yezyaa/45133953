@@ -108,9 +108,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const row = document.createElement('tr');
 
+            // 행에 클릭 이벤트 추가
+            row.addEventListener('click', () => {
+                window.location.href = `/boardDetail.html?boardId=${board.id}`;
+            });
+
             row.innerHTML = `
             <td>${boardNumber}</td>
-            <td><a href="/boardDetail.html?boardId=${board.id}">${board.title}</a></td>
+            <td>${board.title}</td>
             <td>${board.hasAttachment ? '첨부파일 있음' : '첨부파일 없음'}</td>
             <td>${board.email}</td>
             <td>${new Date(board.createdAt).toLocaleString()}</td>
