@@ -237,18 +237,34 @@ form button:hover {
     background-color: #0056b3;
 }
 
-#boardDetail {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+table tr {
+    cursor: pointer;
 }
 
-#backToListButton {
-    display: block;
-    margin: 0 auto;
-    padding: 10px 20px;
+/* 수정 가능한 영역 */
+.editable {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.5rem;
+    outline: none;
+}
+
+.editable:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* 버튼 스타일 */
+#editButton,
+#backToListButton,
+#cancelEditButton,
+#saveEditButton {
+    padding: 0.5rem 1rem;
     font-size: 1rem;
     font-weight: bold;
     color: #fff;
@@ -256,13 +272,44 @@ form button:hover {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    text-align: center;
+    margin: 0.5rem 0.5rem 0 0;
+    display: inline-block;
 }
 
-#backToListButton:hover {
+#editButton:hover,
+#backToListButton:hover,
+#cancelEditButton:hover,
+#saveEditButton:hover {
     background-color: #0056b3;
 }
 
-table tr {
-    cursor: pointer;
+#editButton:disabled,
+#backToListButton:disabled,
+#cancelEditButton:disabled,
+#saveEditButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#buttonContainer,
+#editButtonContainer {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 1rem;
+}
+
+#cancelEditButton {
+    background-color: #6c757d;
+}
+
+#cancelEditButton:hover {
+    background-color: #5a6268;
+}
+
+#saveEditButton {
+    background-color: #28a745;
+}
+
+#saveEditButton:hover {
+    background-color: #218838;
 }

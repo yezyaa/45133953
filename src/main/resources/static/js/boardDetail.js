@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const boardViews = document.getElementById('boardViews');
     const attachmentList = document.getElementById('attachmentList');
     const backToListButton = document.getElementById('backToListButton');
+    const editButton = document.getElementById('editButton');
+    const cancelEditButton = document.getElementById('cancelEditButton');
+    const saveEditButton = document.getElementById('saveEditButton');
+    const buttonContainer = document.getElementById('buttonContainer');
+    const editButtonContainer = document.getElementById('editButtonContainer');
 
     if (!boardId) {
         alert('게시글 ID가 유효하지 않습니다.');
@@ -56,6 +61,23 @@ document.addEventListener('DOMContentLoaded', function () {
             attachmentList.appendChild(noAttachments);
         }
     }
+
+    // 수정 버튼 클릭
+    editButton.addEventListener('click', function () {
+        buttonContainer.style.display = 'none'; // 기존 버튼 숨김
+        editButtonContainer.style.display = 'block'; // 수정 버튼 표시
+    });
+
+    // 취소 버튼 클릭
+    cancelEditButton.addEventListener('click', function () {
+        editButtonContainer.style.display = 'none'; // 수정 버튼 숨김
+        buttonContainer.style.display = 'block'; // 기존 버튼 표시
+    });
+
+    // 저장 버튼 클릭
+    saveEditButton.addEventListener('click', function () {
+
+    });
 
     // 목록으로 돌아가기
     backToListButton.addEventListener('click', function () {
