@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const saveEditButton = document.getElementById('saveEditButton');
     const buttonContainer = document.getElementById('buttonContainer');
     const editButtonContainer = document.getElementById('editButtonContainer');
+    const deleteButton = document.getElementById('deleteButton');
 
     let originalTitle = '';
     let originalContent = '';
@@ -124,6 +125,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert(`게시글 수정에 실패했습니다: ${error.message}`);
             });
     });
+
+    // 삭제 버튼 클릭 이벤트
+    deleteButton.addEventListener('click', function () {
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            deleteBoard(boardId);
+        }
+    });
+
+    // 게시글 삭제 요청
+    function deleteBoard(boardId) {
+        const accessToken = localStorage.getItem('accessToken');
+
+        fetch(`/api/board/${boardId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('게시글이 삭제되었습니다.');
+                    window.location.href = '/boardList.html'; // 삭제 후 목록 페이지로 이동
+                } else {
+                    return response.json().then(err => {
+                        throw new Error(err.message || '게시글 삭제에 실패했습니다.');
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('게시글 삭제 오류:', error.message);
+                alert(`삭제 실패: ${error.message}`);
+            });
+    }
 
     // 목록으로 돌아가기
     backToListButton.addEventListener('click', function () {

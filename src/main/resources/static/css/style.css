@@ -313,3 +313,26 @@ table tr {
 #saveEditButton:hover {
     background-color: #218838;
 }
+
+#deleteButton {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #dc3545; /* 빨간색 */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0.5rem 0.5rem 0 0;
+    display: inline-block;
+}
+
+#deleteButton:hover {
+    background-color: #c82333; /* 더 어두운 빨간색 */
+}
+
+#deleteButton:disabled {
+    background-color: #f5c6cb; /* 흐린 빨간색 */
+    color: #fff;
+    cursor: not-allowed;
+}
