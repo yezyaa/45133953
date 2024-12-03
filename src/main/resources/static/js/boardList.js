@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const createPostButton = document.getElementById('createPostButton');
     const boardList = document.getElementById('boardList');
     const pagination = document.getElementById('pagination');
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+
+    searchInput.value = ''; // 검색어 초기화
 
     // 로그인 상태 확인(localStorage에 accessToken이 있는지 확인)
     const isLoggedIn = !!localStorage.getItem('accessToken');
@@ -67,16 +71,27 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // 검색 버튼 클릭 이벤트 추가
+    searchButton.addEventListener('click', function () {
+        const keyword = searchInput.value.trim();
+        fetchBoardList(0, keyword); // 검색어와 함께 목록 조회
+    });
+
     // 게시글 목록 조회
     fetchBoardList(0);
 
-    function fetchBoardList(page = 0) {
+    function fetchBoardList(page = 0, keyword = '') {
         const accessToken = localStorage.getItem('accessToken');
 
-        fetch(`/api/board?page=${page}`, {
+        // 검색어를 포함한 URL 생성
+        const url = keyword
+            ? `/api/board?page=${page}&keyword=${encodeURIComponent(keyword)}`
+            : `/api/board?page=${page}`;
+
+        fetch(url, { // 이 부분에서 url 변수를 사용
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `Bearer ${accessToken}`,
             },
         })
             .then(response => {
@@ -130,11 +145,13 @@ document.addEventListener('DOMContentLoaded', function () {
         pagination.innerHTML = ''; // 기존 페이지네이션 초기화
 
         const { totalPages, number } = data.data; // 전체 페이지 수와 현재 페이지 가져오기
+        const keyword = searchInput.value.trim(); // 현재 검색어 가져오기
+
         for (let i = 1; i <= totalPages; i++) {
             const button = document.createElement('button');
             button.textContent = i;
             button.className = i === number + 1 ? 'active' : ''; // number는 0부터 시작하므로 +1
-            button.addEventListener('click', () => fetchBoardList(i - 1)); // 서버는 0부터 시작하므로 -1
+            button.addEventListener('click', () => fetchBoardList(i - 1, keyword)); // 검색어와 함께 페이지 변경
             pagination.appendChild(button);
         }
     }
