@@ -5,7 +5,19 @@ document.addEventListener('DOMContentLoaded', function () {
     createPostForm.addEventListener('submit', function (event) {
         event.preventDefault(); // 기본 폼 제출 동작 방지
 
-        const formData = new FormData(createPostForm);
+        const formData = new FormData();
+
+        // 제목과 내용을 FormData에 추가
+        formData.append('title', document.getElementById('title').value);
+        formData.append('content', document.getElementById('content').value);
+
+        // 첨부파일 중 실제 파일이 선택된 경우만 FormData에 추가
+        const fileInputs = document.querySelectorAll('.file-input');
+        fileInputs.forEach(input => {
+            if (input.files.length > 0) {
+                formData.append('attachments', input.files[0]);
+            }
+        });
 
         fetch('/api/board', {
             method: 'POST',
