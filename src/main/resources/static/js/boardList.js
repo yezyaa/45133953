@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     const navLinks = document.querySelector('.nav-links');
     const createPostButton = document.getElementById('createPostButton');
+    const boardList = document.getElementById('boardList');
+    const pagination = document.getElementById('pagination');
 
     // 로그인 상태 확인(localStorage에 accessToken이 있는지 확인)
     const isLoggedIn = !!localStorage.getItem('accessToken');
@@ -63,5 +65,72 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.location.href = '/signIn.html';
             }
         });
+    }
+
+    // 게시글 목록 조회
+    fetchBoardList(0);
+
+    function fetchBoardList(page = 0) {
+        const accessToken = localStorage.getItem('accessToken');
+
+        fetch(`/api/board?page=${page}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('게시글 목록을 불러오는 데 실패했습니다.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const pageSize = data.data.size; // 페이지 크기
+                const currentPage = data.data.number; // 현재 페이지 번호
+                const totalElements = data.data.totalElements; // 전체 게시글 수
+                renderBoardList(data.data.content, currentPage, pageSize, totalElements); // 게시글 목록 렌더링
+                renderPagination(data); // 페이지네이션 렌더링
+            })
+            .catch(error => {
+                console.error('목록 조회 에러:', error.message);
+                alert(`목록 조회 실패: ${error.message}`);
+            });
+    }
+
+    // 게시글 목록 렌더링
+    function renderBoardList(boards, currentPage, pageSize, totalElements) {
+        boardList.innerHTML = ''; // 기존 데이터 초기화
+
+        boards.forEach((board, index) => {
+            // 번호 계산: (현재 페이지 * 페이지 크기) + 현재 페이지 내 순번
+            const boardNumber = totalElements - (currentPage * pageSize + index);
+
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+            <td>${boardNumber}</td>
+            <td><a href="/boardDetail.html?boardId=${board.id}">${board.title}</a></td>
+            <td>${board.hasAttachment ? '첨부파일 있음' : '첨부파일 없음'}</td>
+            <td>${board.email}</td>
+            <td>${new Date(board.createdAt).toLocaleString()}</td>
+            <td>${board.views}</td>
+        `;
+            boardList.appendChild(row);
+        });
+    }
+
+    // 페이지네이션 렌더링
+    function renderPagination(data) {
+        pagination.innerHTML = ''; // 기존 페이지네이션 초기화
+
+        const { totalPages, number } = data.data; // 전체 페이지 수와 현재 페이지 가져오기
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.className = i === number + 1 ? 'active' : ''; // number는 0부터 시작하므로 +1
+            button.addEventListener('click', () => fetchBoardList(i - 1)); // 서버는 0부터 시작하므로 -1
+            pagination.appendChild(button);
+        }
     }
 });
