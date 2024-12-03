@@ -1,4 +1,40 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const createPostForm = document.getElementById('createPostForm');
+    const cancelButton = document.getElementById('cancelButton');
+
+    createPostForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // 기본 폼 제출 동작 방지
+
+        const formData = new FormData(createPostForm);
+
+        fetch('/api/board', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}` // JWT 토큰 추가
+            },
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('게시글이 작성되었습니다.');
+                    window.location.href = '/boardList.html'; // 게시판 목록 페이지로 이동
+                } else {
+                    return response.json().then(error => {
+                        throw new Error(error.message || '게시글 작성에 실패했습니다.');
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('게시글 작성 에러:', error.message);
+                alert(`게시글 작성에 실패했습니다: ${error.message}`);
+            });
+    });
+
+    // 취소 버튼 클릭 시 게시판 목록으로 이동
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '/boardList.html';
+    });
+
     const fileInputsContainer = document.getElementById('fileInputs');
     const maxFileInputs = 5; // 최대 파일 입력 필드 개수 제한
 
