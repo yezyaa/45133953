@@ -7,6 +7,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const boardViews = document.getElementById('boardViews');
     const attachmentList = document.getElementById('attachmentList');
     const backToListButton = document.getElementById('backToListButton');
+    const editButton = document.getElementById('editButton');
+    const cancelEditButton = document.getElementById('cancelEditButton');
+    const saveEditButton = document.getElementById('saveEditButton');
+    const buttonContainer = document.getElementById('buttonContainer');
+    const editButtonContainer = document.getElementById('editButtonContainer');
+
+    let originalTitle = '';
+    let originalContent = '';
 
     if (!boardId) {
         alert('게시글 ID가 유효하지 않습니다.');
@@ -38,8 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 게시글 상세 정보를 화면에 렌더링
     function renderBoardDetail(board) {
-        boardTitle.textContent = board.title;
-        boardContent.textContent = board.content;
+        boardTitle.value = board.title;
+        boardContent.value = board.content;
         boardAuthor.textContent = board.email;
         boardCreatedAt.textContent = new Date(board.createdAt).toLocaleString();
         boardViews.textContent = board.views;
@@ -56,6 +64,66 @@ document.addEventListener('DOMContentLoaded', function () {
             attachmentList.appendChild(noAttachments);
         }
     }
+
+    // 수정 버튼 클릭
+    editButton.addEventListener('click', function () {
+        originalTitle = boardTitle.value;
+        originalContent = boardContent.value;
+
+        boardTitle.disabled = false; // 인풋 활성화
+        boardContent.disabled = false; // 텍스트 영역 활성화
+
+        buttonContainer.style.display = 'none'; // 기존 버튼 숨김
+        editButtonContainer.style.display = 'block'; // 수정 버튼 표시
+    });
+
+    // 취소 버튼 클릭
+    cancelEditButton.addEventListener('click', function () {
+        boardTitle.value = originalTitle; // 원래 제목 복원
+        boardContent.value = originalContent; // 원래 내용 복원
+
+        boardTitle.disabled = true; // 인풋 비활성화
+        boardContent.disabled = true; // 텍스트 영역 비활성화
+
+        editButtonContainer.style.display = 'none'; // 수정 버튼 숨김
+        buttonContainer.style.display = 'block'; // 기존 버튼 표시
+    });
+
+    // 저장 버튼 클릭
+    saveEditButton.addEventListener('click', function () {
+        const updatedTitle = boardTitle.value;
+        const updatedContent = boardContent.value;
+
+        const formData = new FormData();
+        formData.append('title', updatedTitle);
+        formData.append('content', updatedContent);
+
+        fetch(`/api/board/${boardId}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('게시글 수정에 실패했습니다.');
+                }
+                return response.json();
+            })
+            .then(() => {
+                alert('게시글이 성공적으로 수정되었습니다.');
+                boardTitle.disabled = true;
+                boardContent.disabled = true;
+
+                editButtonContainer.style.display = 'none';
+                buttonContainer.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('게시글 수정 에러:', error.message);
+                alert(`게시글 수정에 실패했습니다: ${error.message}`);
+            });
+    });
 
     // 목록으로 돌아가기
     backToListButton.addEventListener('click', function () {
