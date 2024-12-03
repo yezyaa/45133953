@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 작성</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/boardCreate.js" defer></script>
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="/boardList.html">게시판</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main class="container" enctype="multipart/form-data">
+    <h1 style="text-align: center">게시글 작성</h1>
+    <form id="createPostForm">
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="content">내용</label>
+        <textarea id="content" name="content" rows="10" required></textarea>
+
+        <div id="fileInputs" style="margin-top: 1em;">
+            <label for="attachments">첨부파일</label>
+            <input type="file" name="attachments" class="file-input">
+        </div>
+
+        <div class="form-buttons" style="text-align: center">
+            <button type="button" id="cancelButton">취소</button>
+            <button type="submit" id="submitPostButton">작성 완료</button>
+        </div>
+    </form>
+</main>
+
+<footer>
+    <p>&copy; 2024 SK m&service coding test. All rights reserved.</p>
+</footer>
+</body>
+</html>
