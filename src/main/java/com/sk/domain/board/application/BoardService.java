@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -150,14 +151,11 @@ public class BoardService {
     }
 
     // 게시글 목록 조회
-    public Page<BoardListResponse> getBoards(String keyword, Pageable pageable) {
-        Page<Board> boards;
-
-        if (keyword != null && !keyword.isEmpty()) {
-            boards = boardRepository.findByTitleContainingOrMemberEmailContainingAndIsDeletedFalse(keyword, keyword, pageable);
-        } else {
-            boards = boardRepository.findAllByIsDeletedFalse(pageable);
-        }
+    public Page<BoardListResponse> getBoards(Optional<String> keywordOptional, Pageable pageable) {
+        Page<Board> boards = keywordOptional
+                .filter(keyword -> !keyword.isEmpty())
+                .map(keyword -> boardRepository.findByTitleContainingOrMemberEmailContainingAndIsDeletedFalse(keyword, keyword, pageable))
+                .orElseGet(() -> boardRepository.findAllByIsDeletedFalse(pageable));
 
         return boards.map(board -> new BoardListResponse(
                 board.getId(),
@@ -168,7 +166,7 @@ public class BoardService {
                 board.getCreatedAt()
         ));
     }
-    
+
     private Attachment createAttachment(Board board, MultipartFile file) {
         try {
             return Attachment.of(board, file.getOriginalFilename(), file.getBytes());

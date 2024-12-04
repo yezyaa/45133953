@@ -1,9 +1,9 @@
 package com.sk.domain.board.api;
 
 import com.sk.domain.board.api.dto.request.BoardCreateRequest;
+import com.sk.domain.board.api.dto.request.BoardUpdateRequest;
 import com.sk.domain.board.api.dto.response.BoardDetailResponse;
 import com.sk.domain.board.api.dto.response.BoardListResponse;
-import com.sk.domain.board.api.dto.request.BoardUpdateRequest;
 import com.sk.domain.board.application.BoardService;
 import com.sk.global.dto.ApiSuccessResponse;
 import com.sk.global.security.CustomUserDetails;
@@ -18,6 +18,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -96,7 +98,7 @@ public class BoardController {
     // 게시글 목록 조회
     @GetMapping
     public ResponseEntity<ApiSuccessResponse<Page<BoardListResponse>>> getBoards(
-            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Optional<String> keyword,
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
             HttpServletRequest servletRequest
     ) {
