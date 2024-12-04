@@ -28,5 +28,5 @@ spring:
       max-request-size: 10MB # 요청 전체 크기 제한
 
 jwt:
-  secret: "kRa/gVjXVrlL4MWT8vKyDe5oFO6E6fMBldObKPKZTxO6MKzYb0Nc56Qgivr6nqGr9SXR3/uTXehmUbeD7QE9ug=="
-  expiration: 3600000 # 1시간
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_ACCESS_EXPIRATION}
