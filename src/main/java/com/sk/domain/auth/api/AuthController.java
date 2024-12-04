@@ -1,8 +1,8 @@
 package com.sk.domain.auth.api;
 
-import com.sk.domain.auth.api.dto.SignInRequest;
-import com.sk.domain.auth.api.dto.SignInResponse;
-import com.sk.domain.auth.api.dto.SignUpRequest;
+import com.sk.domain.auth.api.dto.request.SignInRequest;
+import com.sk.domain.auth.api.dto.response.SignInResponse;
+import com.sk.domain.auth.api.dto.request.SignUpRequest;
 import com.sk.domain.auth.application.AuthService;
 import com.sk.global.dto.ApiSuccessResponse;
 import com.sk.global.security.JwtTokenProvider;

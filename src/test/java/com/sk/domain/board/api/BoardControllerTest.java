@@ -1,7 +1,7 @@
 package com.sk.domain.board.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sk.domain.auth.api.dto.SignInRequest;
+import com.sk.domain.auth.api.dto.request.SignInRequest;
 import com.sk.domain.auth.domain.Member;
 import com.sk.domain.auth.repository.AuthRepository;
 import com.sk.domain.board.domain.Attachment;

@@ -1,5 +1,6 @@
-package com.sk.global.exception.errorcode;
+package com.sk.domain.auth.exception;
 
+import com.sk.global.exception.errorcode.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
