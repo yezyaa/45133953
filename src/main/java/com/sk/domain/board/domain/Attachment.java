@@ -16,7 +16,11 @@ public class Attachment extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id", nullable = false)
+    @JoinColumn(
+            name = "board_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_ATTACHMENT_BOARD")
+    )
     private Board board; // 게시글
 
     @Column(name = "file_name", nullable = false)
