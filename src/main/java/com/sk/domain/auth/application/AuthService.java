@@ -4,7 +4,7 @@ import com.sk.domain.auth.api.dto.request.SignInRequest;
 import com.sk.domain.auth.api.dto.request.SignUpRequest;
 import com.sk.domain.auth.domain.Member;
 import com.sk.domain.auth.exception.*;
-import com.sk.domain.auth.repository.AuthRepository;
+import com.sk.domain.auth.repository.MemberRepository;
 import com.sk.global.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AuthService {
 
-    private final AuthRepository authRepository;
+    private final MemberRepository authRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 

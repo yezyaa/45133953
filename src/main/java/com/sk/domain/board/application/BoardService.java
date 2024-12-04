@@ -3,7 +3,7 @@ package com.sk.domain.board.application;
 import com.sk.domain.auth.domain.Member;
 import com.sk.domain.auth.exception.AccessDeniedException;
 import com.sk.domain.auth.exception.UserNotFoundException;
-import com.sk.domain.auth.repository.AuthRepository;
+import com.sk.domain.auth.repository.MemberRepository;
 import com.sk.domain.board.api.dto.request.BoardCreateRequest;
 import com.sk.domain.board.api.dto.request.BoardUpdateRequest;
 import com.sk.domain.board.api.dto.response.AttachmentResponse;
@@ -30,7 +30,7 @@ import java.util.List;
 @Service
 public class BoardService {
 
-    private final AuthRepository authRepository;
+    private final MemberRepository authRepository;
     private final BoardRepository boardRepository;
     private final AttachmentRepository attachmentRepository;
 

@@ -1,7 +1,7 @@
 package com.sk.domain.board.application;
 
 import com.sk.domain.auth.domain.Member;
-import com.sk.domain.auth.repository.AuthRepository;
+import com.sk.domain.auth.repository.MemberRepository;
 import com.sk.domain.board.api.dto.request.BoardCreateRequest;
 import com.sk.domain.board.domain.Attachment;
 import com.sk.domain.board.domain.Board;
@@ -26,7 +26,7 @@ class BoardServiceTest {
     private BoardService boardService;
 
     @Autowired
-    private AuthRepository authRepository;
+    private MemberRepository authRepository;
 
     @Autowired
     private BoardRepository boardRepository;
