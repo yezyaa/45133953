@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>45133953</title>
+    <title>45133953 - SK m&service</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
 
@@ -19,13 +20,274 @@
 </header>
 
 <main class="container">
-    <h1>이예지</h1>
-    <section class="readme">
-        <h2>프로젝트 소개</h2>
+    <h1>2024 동계 채용연계형 인턴십 코딩테스트</h1>
+    <section class="applicant-info">
+        <h2>👩🏻‍🦰 지원자 정보</h2>
         <ul>
-            <li>회원가입 및 로그인</li>
-            <li>게시글 작성, 수정, 삭제</li>
-            <li>게시글 상세 조회, 목록 조회 및 검색</li>
+            <li><strong>이름:</strong> <b>이예지</b></li>
+            <li><strong>Github:</strong> <a href="https://github.com/yezyaa/45133953" target="_blank">https://github.com/yezyaa/45133953</a></li>
+        </ul>
+    </section>
+
+    <section class="project-summary">
+        <h2>📌 프로젝트 요약</h2>
+        <ul>
+            <li><strong>프로젝트 이름:</strong> 45133953</li>
+            <li><strong>프로젝트 주제:</strong> Spring Boot 기반의 게시판 및 사용자 인증 기능 개발</li>
+            <li><strong>개발 기간:</strong> 2024.11.30 ~ 2024.12.04</li>
+            <li><strong>사용 기술:</strong> Java 17, Spring Boot, H2 Database, Gradle, JWT</li>
+        </ul>
+    </section>
+
+    <section class="project-goal">
+        <h2>🎯 프로젝트 목표</h2>
+        <p>Spring Boot를 활용하여 <b>사용자 인증</b>과 <b>게시판 기능</b>을 개발하고, 효율적인 데이터 관리 및 확장성을 고려한 프로젝트입니다.</p>
+        <ul>
+            <li><strong>기술 스택 활용</strong>: Spring Boot와 JPA를 활용한 백엔드 구현</li>
+            <li><strong>사용자 인증:</strong> 회원가입, 로그인, 로그아웃</li>
+            <li><strong>게시판 기능:</strong> 게시글 작성, 수정, 삭제, 상세 조회, 목록 조회 및 검색, 첨부파일 관리</li>
+            <li><strong>전역예외처리:</strong> 애플리케이션 전반에서 발생하는 예외를 일관된 구조로 처리</li>
+        </ul>
+    </section>
+
+    <section class="project-documents">
+        <h2>📚 프로젝트 문서</h2>
+        <ul>
+            <li><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQrv6SJgrWJoIr0ytnyXmzF3GF2RZwxueJVjzwHdWwofWeM06d7etkCBvRzkM3EcYt6ZM1ZCtQYIDeZ/pubhtml?gid=2095547522&single=true" target="_blank">🔗 WBS 바로가기</a></li>
+            <li><a href="https://www.erdcloud.com/d/uNDRShomiDLcnwbXg" target="_blank">🔗 ERD 바로가기</a></li>
+            <li><a href="https://yezyaa.notion.site/1511e6b4a0b98061a004fcb6a5f95acf?pvs=4" target="_blank">🔗 테이블 명세서 바로가기</a></li>
+            <li><a href="https://yezyaa.notion.site/API-1511e6b4a0b9806fbcb9c73bc425b243?pvs=4" target="_blank">🔗 API 명세서 바로가기</a></li>
+            <li><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQrv6SJgrWJoIr0ytnyXmzF3GF2RZwxueJVjzwHdWwofWeM06d7etkCBvRzkM3EcYt6ZM1ZCtQYIDeZ/pubhtml?gid=0&single=true" target="_blank">🔗 요구사항 정의서 바로가기</a></li>
+            <li><p><strong>플로우차트</strong></p><img src="/images/sk-flow-chart.jpg" alt="플로우차트" style="width: 600px;"/></li>
+            <li><p><strong>ERD</strong></p><img src="/images/sk-erd%201.png" alt="erd" style="width: 600px;"/></li>
+        </ul>
+    </section>
+
+    <section class="dev-environment">
+        <h2>🛠️ 개발 환경</h2>
+        <ul>
+            <li><strong>백엔드:</strong> Java 17, Spring Boot, Spring Security, Spring Data JPA, JWT, Gradle</li>
+            <li><strong>프론트엔드:</strong> HTML, CSS, JavaScript</li>
+            <li><strong>데이터베이스:</strong> H2 Database</li>
+            <li><strong>테스트:</strong> JUnit 5, Spring Boot Test, MockMvc, IntelliJ HTTP Client, Postman</li>
+            <li><strong>기타:</strong> GitHub, IntelliJ IDEA</li>
+        </ul>
+    </section>
+
+    <section class="features">
+        <h2>🖥️ 구현 기능</h2>
+        <ul>
+            <li>
+                <input type="checkbox" checked disabled>
+                <strong>회원가입</strong>
+                <p><strong>설명:</strong> 사용자가 아이디(이메일), 이름, 비밀번호, 비밀번호 확인을 입력하여 계정을 생성한다.</p>
+                <p><strong>주요 기능:</strong></p>
+                <ul>
+                    <li>이메일 중복 확인</li>
+                    <li>비밀번호와 비밀번호 확인 값 일치 검증</li>
+                    <li>필드 값 미입력 시 유효성 검사 예외 발생</li>
+                    <li>비밀번호 암호화 후 회원 데이터 저장</li>
+                </ul>
+            </li>
+            <hr>
+            <li>
+                <input type="checkbox" checked disabled>
+                <strong>로그인</strong>
+                <p><strong>설명:</strong> 사용자가 아이디(이메일)와 비밀번호를 입력하여 인증을 하고, AccessToken을 발급 받아 로그인한다.</p>
+                <p><strong>주요 기능:</strong></p>
+                <ul>
+                    <li>이메일과 비밀번호 확인</li>
+                    <li>AccessToken 생성 및 발급</li>
+                    <li>발급된 토큰을 DB에 저장</li>
+                </ul>
+            </li>
+            <hr>
+            <li>
+                <input type="checkbox" checked disabled>
+                <strong>로그아웃</strong>
+                <p><strong>설명:</strong> 로그인한 사용자가 발급받은 AccessToken을 무효화하여 로그아웃한다.</p>
+                <p><strong>주요 기능:</strong></p>
+                <ul>
+                    <li>사용자의 AccessToken 삭제</li>
+                </ul>
+            </li>
+            <hr>
+            <li>
+                <input type="checkbox" checked disabled>
+                <strong>게시글 작성</strong>
+                <p><strong>설명:</strong> 로그인한 사용자는 게시글을 작성한다.</p>
+                <p><strong>주요 기능:</strong></p>
+                <ul>
+                    <li>비로그인 시 로그인 페이지로 이동</li>
+                    <li>제목과 내용을 입력받아 게시글 생성 후 게시글 목록으로 리다이렉트</li>
+                    <li>첨부파일이 있는 경우 최대 5개 업로드 가능</li>
+                </ul>
+            </li>
+            <hr>
+            <li>
+                <input type="checkbox" checked disabled>
+                <strong>게시글 수정</strong>
+                <p><strong>설명:</strong> 본인이 작성한 게시글만 수정이 가능하다.</p>
+                <p><strong>주요 기능:</strong></p>
+                <ul>
+                    <li>제목, 내용 수정</li>
+                    <li>첨부파일 추가/삭제</li>
+                </ul>
+            </li>
+            <hr>
+            <li>
+                <input type="checkbox" checked disabled>
+                <strong>게시글 삭제</strong>
+                <p><strong>설명:</strong> 본인이 작성한 게시글만 삭제가 가능하다.</p>
+                <p><strong>주요 기능:</strong></p>
+                <ul>
+                    <li>소프트 딜리트 방식으로 삭제 처리</li>
+                    <li>삭제된 게시글은 조회 불가</li>
+                </ul>
+            </li>
+            <hr>
+            <li>
+                <input type="checkbox" checked disabled>
+                <strong>게시글 상세 조회</strong>
+                <p><strong>설명:</strong> 모든 사용자는 특정 게시글을 조회한다.</p>
+                <p><strong>주요 기능:</strong></p>
+                <ul>
+                    <li>게시글을 조회할 때마다 조회수 1 증가</li>
+                </ul>
+            </li>
+            <hr>
+            <li>
+                <input type="checkbox" checked disabled>
+                <strong>게시글 목록 조회 및 검색</strong>
+                <p><strong>설명:</strong> 모든 사용자는 게시글의 목록을 조회하고, 사용자의 아이디(이메일) 또는 제목으로 게시글을 검색한다.</p>
+                <p><strong>주요 동작:</strong></p>
+                <ul>
+                    <li>검색 조건: 아이디(이메일) 또는 제목</li>
+                    <li>게시글 정렬: 최신순</li>
+                    <li>1페이지당 10개 목록 조회하는 페이지네이션 기능</li>
+                </ul>
+            </li>
+            <hr>
+            <li>
+                <input type="checkbox" checked disabled>
+                <strong>예외 처리</strong>
+                <p><strong>설명:</strong> 전역 예외 처리를 구현하여 애플리케이션 전역 발생하는 예외를 중앙에서 관리한다.</p>
+                <p><strong>주요 동작:</strong></p>
+                <ul>
+                    <li>비즈니스 로직의 커스텀 예외 검증</li>
+                    <li>이메일 중복, 비밀번호 미입력 등 유효성 검증</li>
+                    <li>JSON 유효성 검증</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section class="conventions">
+        <h2>📃 컨벤션</h2>
+
+        <h3>커밋 메세지</h3>
+        <div style="background-color: #f8f9fa; padding: 16px; border: 1px solid #dee2e6; border-radius: 8px;">
+        <pre style="white-space: pre-wrap;">
+&lt;type&gt;: &lt;subject&gt;
+&lt;BLANK LINE&gt;
+&lt;body&gt;
+
+예시
+feat: 회원가입 기능 구현
+
+- 회원 데이터 저장 로직 추가
+- 중복 이메일 검증 로직 구현</pre>
+        </div>
+        <br/>
+        <h3>커밋 키워드</h3>
+        <table style="width: 60%; font-size: 15px;">
+            <thead>
+            <tr>
+                <th>타입</th>
+                <th>내용</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>feat</td>
+                <td>새로운 기능에 관한 커밋</td>
+            </tr>
+            <tr>
+                <td>enhance</td>
+                <td>기능 개선, 정책 변경으로 인한 기능 수정 등의 커밋</td>
+            </tr>
+            <tr>
+                <td>refactor</td>
+                <td>기능 변경이 없는 코드 리팩토링에 관한 커밋</td>
+            </tr>
+            <tr>
+                <td>perf</td>
+                <td>성능 개선에 관한 커밋</td>
+            </tr>
+            <tr>
+                <td>test</td>
+                <td>테스트 코드에 관한 커밋</td>
+            </tr>
+            <tr>
+                <td>fix</td>
+                <td>버그 수정에 관한 커밋</td>
+            </tr>
+            <tr>
+                <td>revert</td>
+                <td>잘못된 커밋을 되돌리는 커밋</td>
+            </tr>
+            <tr>
+                <td>deps(x)</td>
+                <td>의존성 추가 혹은 변경에 관한 커밋</td>
+            </tr>
+            <tr>
+                <td>build</td>
+                <td>빌드 관련 파일 혹은 모듈 설치, 삭제에 관한 커밋</td>
+            </tr>
+            <tr>
+                <td>ci</td>
+                <td>ci 관련 설정에 관한 커밋</td>
+            </tr>
+            <tr>
+                <td>docsvv</td>
+                <td>문서에 관한 커밋</td>
+            </tr>
+            <tr>
+                <td>config</td>
+                <td>프로젝트 환경 설정에 관한 커밋</td>
+            </tr>
+            <tr>
+                <td>style</td>
+                <td>코드 스타일 혹은 포맷 등에 관한 커밋</td>
+            </tr>
+            <tr>
+                <td>chore</td>
+                <td>자잘한 수정에 대한 커밋</td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+        <h3>브랜치 전략 (Github Flow)</h3>
+        <img src="/images/sk-github-flow.jpg" alt="Github Flow">
+        <br/><br/>
+        <h3>패키지 구조</h3>
+        <ul class="package-structure">
+            <li><strong>domain:</strong> 핵심 비즈니스 로직 계층
+                <ul>
+                    <li><strong>api:</strong> 외부와 데이터를 주고받는 계층 (Controller 및 Dto)</li>
+                    <li><strong>application:</strong> 비즈니스 로직 처리 서비스 계층</li>
+                    <li><strong>repository:</strong> 데이터베이스 접근 계층</li>
+                    <li><strong>exception:</strong> 커스텀 예외 처리 계층</li>
+                </ul>
+            </li>
+            <li><strong>global:</strong> 공통 구성 요소 계층
+                <ul>
+                    <li><strong>config:</strong> 전역 설정</li>
+                    <li><strong>dto:</strong> 공통적으로 사용되는 Dto 클래스</li>
+                    <li><strong>exception:</strong> 전역 예외 처리</li>
+                    <li><strong>security:</strong> 인증 및 보안 관련 클래스</li>
+                </ul>
+            </li>
         </ul>
     </section>
 </main>

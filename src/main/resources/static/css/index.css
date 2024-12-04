@@ -1,0 +1,128 @@
+/* 메인 섹션 컨테이너 */
+main .container {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 헤더 섹션 */
+main h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* 섹션 제목 */
+main h2 {
+    color: #007bff;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.5rem;
+}
+
+/* 리스트 스타일 */
+main ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+main ul li {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* 계층형 리스트 스타일 */
+main ul li ul {
+    margin-left: 1.5rem;
+    padding-left: 1rem;
+}
+
+main ul li ul li {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+main ul li strong {
+    color: #333;
+}
+
+/* 링크 스타일 */
+main a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main a:hover {
+    text-decoration: underline;
+}
+
+/* 섹션별 박스 디자인 */
+main section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 표 스타일링 */
+main table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+main table th, main table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+main table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+main table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+main .features ul li > p {padding-left: 1.5em; margin: 6px 0px;}
+main .features ul li ul li {list-style: circle; margin-left: 1.5em;}
+
+/* 계층형 리스트 스타일 */
+main ul.package-structure {
+    list-style: none;
+    padding: 0;
+    margin-left: 1.5em;
+}
+
+main ul.package-structure > li {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+    list-style: circle;
+}
+
+main ul.package-structure > li > ul {
+    margin-left: 1.5rem;
+    margin-top: 10px;
+    padding-left: 1rem;
+}
+
+main ul.package-structure > li > ul > li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: #666;
+    list-style: circle;
+}
