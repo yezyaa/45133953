@@ -47,16 +47,21 @@ public class BoardService {
                 member,
                 boardCreateRequest.title(),
                 boardCreateRequest.content(),
-                boardCreateRequest.attachments() != null && !boardCreateRequest.attachments().isEmpty());
+                hasAttachments(boardCreateRequest));
         boardRepository.save(board);
 
-        // 첨부파일 처리 및 저장
-        if (boardCreateRequest.attachments() != null && !boardCreateRequest.attachments().isEmpty()) {
-            List<Attachment> attachments = boardCreateRequest.attachments().stream()
+        // 첨부파일 저장
+        if (hasAttachments(boardCreateRequest)) {
+            List<Attachment> attachments = boardCreateRequest.attachments()
+                    .stream()
                     .map(file -> createAttachment(board, file))
                     .toList();
             attachmentRepository.saveAll(attachments);
         }
+    }
+
+    private static boolean hasAttachments(BoardCreateRequest boardCreateRequest) {
+        return boardCreateRequest.attachments() != null && !boardCreateRequest.attachments().isEmpty();
     }
 
     // 게시글 수정
