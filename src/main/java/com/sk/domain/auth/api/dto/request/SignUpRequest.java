@@ -1,4 +1,4 @@
-package com.sk.domain.auth.api.dto;
+package com.sk.domain.auth.api.dto.request;
 
 import com.sk.domain.auth.domain.Member;
 import jakarta.validation.constraints.NotBlank;

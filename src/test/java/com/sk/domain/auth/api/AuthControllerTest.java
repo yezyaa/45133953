@@ -1,8 +1,8 @@
 package com.sk.domain.auth.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sk.domain.auth.api.dto.SignInRequest;
-import com.sk.domain.auth.api.dto.SignUpRequest;
+import com.sk.domain.auth.api.dto.request.SignInRequest;
+import com.sk.domain.auth.api.dto.request.SignUpRequest;
 import com.sk.domain.auth.domain.Member;
 import com.sk.domain.auth.repository.AuthRepository;
 import org.junit.jupiter.api.BeforeEach;

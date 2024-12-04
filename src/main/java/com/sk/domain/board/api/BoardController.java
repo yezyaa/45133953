@@ -1,9 +1,9 @@
 package com.sk.domain.board.api;
 
-import com.sk.domain.board.api.dto.BoardCreateRequest;
-import com.sk.domain.board.api.dto.BoardDetailResponse;
-import com.sk.domain.board.api.dto.BoardListResponse;
-import com.sk.domain.board.api.dto.BoardUpdateRequest;
+import com.sk.domain.board.api.dto.request.BoardCreateRequest;
+import com.sk.domain.board.api.dto.response.BoardDetailResponse;
+import com.sk.domain.board.api.dto.response.BoardListResponse;
+import com.sk.domain.board.api.dto.request.BoardUpdateRequest;
 import com.sk.domain.board.application.BoardService;
 import com.sk.global.dto.ApiSuccessResponse;
 import com.sk.global.security.CustomUserDetails;

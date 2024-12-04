@@ -1,7 +1,7 @@
 package com.sk.domain.auth.application;
 
-import com.sk.domain.auth.api.dto.SignInRequest;
-import com.sk.domain.auth.api.dto.SignUpRequest;
+import com.sk.domain.auth.api.dto.request.SignInRequest;
+import com.sk.domain.auth.api.dto.request.SignUpRequest;
 import com.sk.domain.auth.domain.Member;
 import com.sk.domain.auth.exception.*;
 import com.sk.domain.auth.repository.AuthRepository;

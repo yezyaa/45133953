@@ -2,7 +2,7 @@ package com.sk.domain.board.application;
 
 import com.sk.domain.auth.domain.Member;
 import com.sk.domain.auth.repository.AuthRepository;
-import com.sk.domain.board.api.dto.BoardCreateRequest;
+import com.sk.domain.board.api.dto.request.BoardCreateRequest;
 import com.sk.domain.board.domain.Attachment;
 import com.sk.domain.board.domain.Board;
 import com.sk.domain.board.repository.AttachmentRepository;

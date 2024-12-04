@@ -1,4 +1,4 @@
-package com.sk.domain.board.api.dto;
+package com.sk.domain.board.api.dto.response;
 
 import java.time.LocalDateTime;
 
