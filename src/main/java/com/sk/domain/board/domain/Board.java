@@ -20,7 +20,11 @@ public class Board extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(
+            name = "member_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_BOARD_MEMBER")
+    )
     private Member member; // 작성자
 
     @Column(nullable = false, length = 100)
