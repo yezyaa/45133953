@@ -117,6 +117,7 @@ public class BoardService {
             throw new AccessDeniedException();
         }
 
+        board.deleteAttachments();
         board.delete();
     }
 

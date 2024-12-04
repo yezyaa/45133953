@@ -6,10 +6,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +20,11 @@ public class Board extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(
+            name = "member_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "FK_BOARD_MEMBER")
+    )
     private Member member; // 작성자
 
     @Column(nullable = false, length = 100)
@@ -38,27 +39,22 @@ public class Board extends BaseEntity {
     @Column(name = "has_attachments", nullable = false)
     private boolean hasAttachments = false; // 첨부파일 여부
 
-    @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted = false; // 삭제 여부
-
-    @CreatedDate
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "board",
+            cascade = CascadeType.REMOVE,
+            fetch = FetchType.LAZY
+    )
     private List<Attachment> attachments = new ArrayList<>();
 
+    public Board(Member member, String title, String content, boolean hasAttachments) {
+        this.member = member;
+        this.title = title;
+        this.content = content;
+        this.hasAttachments = hasAttachments;
+    }
+
     public static Board of(Member member, String title, String content, boolean hasAttachments) {
-        Board board = new Board();
-        board.member = member;
-        board.title = title;
-        board.content = content;
-        board.hasAttachments = hasAttachments;
-        return board;
+        return new Board(member, title, content, hasAttachments);
     }
 
     public void update(String title, String content, boolean hasAttachments) {
@@ -67,11 +63,12 @@ public class Board extends BaseEntity {
         this.hasAttachments = hasAttachments;
     }
 
-    public void delete() {
-        this.isDeleted = true;
-    }
-
     public void increaseViews() {
         this.views++;
     }
+
+    public void deleteAttachments() {
+        this.attachments.forEach(Attachment::delete);
+    }
+
 }
