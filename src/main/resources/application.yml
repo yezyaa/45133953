@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: 45133953
+    name: sk
   h2:
     console:
       enabled: true
