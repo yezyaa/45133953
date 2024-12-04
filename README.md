@@ -26,19 +26,16 @@ Spring Boot를 활용하여 **사용자 인증**과 **게시판 기능**을 개�
 <br/>
 
 ### 플로우 차트
-<img src="https://github.com/user-attachments/assets/e9a9a5ca-1ed5-4fcc-9667-ffa13a699efe" alt="sk-flow-chart" width="600">
-
-<br/>
+<img src="https://github.com/user-attachments/assets/e9a9a5ca-1ed5-4fcc-9667-ffa13a699efe" alt="sk-flow-chart" width="600"><br/><br/>
 
 ### ERD
 <img src="https://github.com/user-attachments/assets/2e463d42-c1b7-4065-bbcd-ddacb227d31d" alt="sk-erd" width="600">
 <br/><br/><br/>
 
 ## **🛠️ 개발 환경**
-- **백엔드:** ![Java](https://img.shields.io/badge/Java17-%23ED8B00.svg?style=square&logo=openjdk&logoColor=white) <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=square&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=square&logo=Spring Security&logoColor=white"> ![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-6DB33F?style=square&logo=Spring&logoColor=white) ![JWT](https://img.shields.io/badge/JWT-black?style=square&logo=JSON%20web%20tokens) ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=square&logo=Gradle&logoColor=white)
+- **백엔드:** ![Java](https://img.shields.io/badge/Java17-%23ED8B00.svg?style=square&logo=openjdk&logoColor=white) <img src="https://img.shields.io/badge/Spring%20Boot3.4.0-6DB33F?style=square&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=square&logo=Spring Security&logoColor=white"> ![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-6DB33F?style=square&logo=Spring&logoColor=white) ![JWT](https://img.shields.io/badge/JWT-black?style=square&logo=JSON%20web%20tokens) ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=square&logo=Gradle&logoColor=white)
 - **프론트엔드:** ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=square&logo=html5&logoColor=white) ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=square&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=square&logo=javascript&logoColor=black)
 - **데이터베이스:** ![H2 Database](https://img.shields.io/badge/H2%20Database-4169E1.svg?style=square&logo=h2&logoColor=white)
-- **버전 관리:** ![GitHub](https://img.shields.io/badge/Github-%23121011.svg?style=square&logo=github&logoColor=white)
 - **기타:** ![GitHub](https://img.shields.io/badge/Github-%23121011.svg?style=square&logo=github&logoColor=white) ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000.svg?style=square&logo=intellij-idea&logoColor=white) ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=square&logo=postman&logoColor=white)<br/><br/><br/>
 
 ## **🖥️ 구현 기능**
@@ -114,7 +111,7 @@ Spring Boot를 활용하여 **사용자 인증**과 **게시판 기능**을 개�
   - **주요 동작**:
     - 비즈니스 로직의 커스텀 예외 검증
     - 이메일 중복, 비밀번호 미입력 등 유효성 검증
-    - json 검증    
+    - JSON 유효성 검증
 <br/><br/>
 
 ## **📃컨벤션**
@@ -135,29 +132,27 @@ feat: 회원가입 기능 구현
 ### 커밋 키워드
 |타입|내용|
 |---|---|
-|Feat|새로운 기능 추가|
-|Fix|기능 수정, 버그 해결|
-|!HOTFIX|급하게 치명적인 버그를 고쳐야 하는 경우|
-|Setting|전역 설정 변경|
-|ReadMe|리드미 파일 작업|
-|Chore|패키지 매니저 수정, 그 외 기타(폴더구조 등) 수|
-|Docs|문서 추가/수정|
-|Style|코드 formatting, 세미콜론 누락, 코드 자체의 변경이 없는 경우|
-|Refactor|코드 리팩토링|
-|Test|테스트 코드, 리팩토링 테스트 코드 추가/수정|
-|Comment|필요한 주석 추가 및 변경|
-|Rename|파일 또는 폴더 명을 수정하거나 옮기는 작업만인 경우|
-|Remove|폴더/파일을 삭제하는 작업만 수행한 경우|
-|Design|UI 변경|
+|feat|새로운 기능에 관한 커밋|
+|enhance|기능 개선, 정책 변경으로 인한 기능 수정 등의 커밋|
+|refactor|기능 변경이 없는 코드 리팩토링에 관한 커밋|
+|perf|성능 개선에 관한 커밋|
+|test|테스트 코드에 관한 커밋|
+|fix|버그 수정에 관한 커밋|
+|revert|잘못된 커밋을 되돌리는 커밋|
+|deps(x)|의존성 추가 혹은 변경에 관한 커밋|
+|build|빌드 관련 파일 혹은 모듈 설치, 삭제에 관한 커밋|
+|ci|ci 관련 설정에 관한 커밋|
+|docs|문서에 관한 커밋|
+|config|프로젝트 환경 설정에 관한 커밋|
+|style|코드 스타일 혹은 포맷 등에 관한 커밋|
+|chore|자잘한 수정에 대한 커밋|
 <br/>
 
-### **브랜치 전략(Github Flow)**
-![sk-github-flow](https://github.com/user-attachments/assets/76c1b389-b237-4ade-8c2e-b3387db057c3)<br/><br/>
 
 ### **패키지 구조**
 - domain: 핵심 비즈니스 로직 계층
   - api: 외부와 데이터를 주고받는 계층 (Controller 및 Dto)
-  - application: 비즈니스 로직 처리 및 서비스 계층
+  - application: 비즈니스 로직 처리 서비스 계층
   - repository: 데이터베이스 접근 계층
   - exception: 커스텀 예외 처리 계층
 - global: 공통 구성 요소 계층
