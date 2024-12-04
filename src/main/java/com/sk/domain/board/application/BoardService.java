@@ -1,7 +1,6 @@
 package com.sk.domain.board.application;
 
 import com.sk.domain.auth.domain.Member;
-import com.sk.domain.auth.exception.AccessDeniedException;
 import com.sk.domain.auth.exception.UserNotFoundException;
 import com.sk.domain.auth.repository.MemberRepository;
 import com.sk.domain.board.api.dto.request.BoardCreateRequest;
@@ -24,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -47,32 +47,32 @@ public class BoardService {
                 member,
                 boardCreateRequest.title(),
                 boardCreateRequest.content(),
-                boardCreateRequest.attachments() != null && !boardCreateRequest.attachments().isEmpty());
+                hasAttachments(boardCreateRequest));
         boardRepository.save(board);
 
-        // 첨부파일 처리 및 저장
-        if (boardCreateRequest.attachments() != null && !boardCreateRequest.attachments().isEmpty()) {
-            List<Attachment> attachments = boardCreateRequest.attachments().stream()
+        // 첨부파일 저장
+        if (hasAttachments(boardCreateRequest)) {
+            List<Attachment> attachments = boardCreateRequest.attachments()
+                    .stream()
                     .map(file -> createAttachment(board, file))
                     .toList();
             attachmentRepository.saveAll(attachments);
         }
     }
 
+    private static boolean hasAttachments(BoardCreateRequest boardCreateRequest) {
+        return boardCreateRequest.attachments() != null && !boardCreateRequest.attachments().isEmpty();
+    }
+
     // 게시글 수정
     @Transactional
     public void updateBoard(Long memberId, Long boardId, BoardUpdateRequest boardUpdateRequest) {
 
-        // 게시글 조회
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(BoardNotFoundException::new);
 
-        // 작성자 확인
-        if (!board.getMember().getId().equals(memberId)) {
-            throw new AccessDeniedException();
-        }
+        board.validateAuthor(memberId);
 
-        // 게시글 수정
         board.update(
                 boardUpdateRequest.title(),
                 boardUpdateRequest.content(),
@@ -113,9 +113,7 @@ public class BoardService {
         Board board = boardRepository.findByIdAndIsDeletedFalse(boardId)
                 .orElseThrow(BoardNotFoundException::new);
 
-        if (!board.getMember().getId().equals(memberId)) {
-            throw new AccessDeniedException();
-        }
+        board.validateAuthor(memberId);
 
         board.deleteAttachments();
         board.delete();
@@ -153,14 +151,11 @@ public class BoardService {
     }
 
     // 게시글 목록 조회
-    public Page<BoardListResponse> getBoards(String keyword, Pageable pageable) {
-        Page<Board> boards;
-
-        if (keyword != null && !keyword.isEmpty()) {
-            boards = boardRepository.findByTitleContainingOrMemberEmailContainingAndIsDeletedFalse(keyword, keyword, pageable);
-        } else {
-            boards = boardRepository.findAllByIsDeletedFalse(pageable);
-        }
+    public Page<BoardListResponse> getBoards(Optional<String> keywordOptional, Pageable pageable) {
+        Page<Board> boards = keywordOptional
+                .filter(keyword -> !keyword.isEmpty())
+                .map(keyword -> boardRepository.findByTitleContainingOrMemberEmailContainingAndIsDeletedFalse(keyword, keyword, pageable))
+                .orElseGet(() -> boardRepository.findAllByIsDeletedFalse(pageable));
 
         return boards.map(board -> new BoardListResponse(
                 board.getId(),
@@ -171,7 +166,7 @@ public class BoardService {
                 board.getCreatedAt()
         ));
     }
-    
+
     private Attachment createAttachment(Board board, MultipartFile file) {
         try {
             return Attachment.of(board, file.getOriginalFilename(), file.getBytes());
