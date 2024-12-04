@@ -5,10 +5,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -31,20 +27,14 @@ public class Member extends BaseEntity {
     @Column(name = "access_token")
     private String accessToken;
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    public Member(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
 
     public static Member of(String email, String name, String password) {
-        Member user = new Member();
-        user.email = email;
-        user.name = name;
-        user.password = password;
-        return user;
+        return new Member(email, name, password);
     }
 
     public void updateAccessToken(String accessToken) {
