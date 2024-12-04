@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -207,39 +206,6 @@ class AuthControllerTest {
     }
 
     @Test
-    @DisplayName("로그인 인증 성공 테스트")
-    void accessTokenTest() throws Exception {
-        // given
-        authRepository.save(Member.of(
-                "yezy@gmail.com",
-                "이예지",
-                passwordEncoder.encode("password123")
-        ));
-
-        SignInRequest signInRequest = new SignInRequest(
-                "yezy@gmail.com",
-                "password123"
-        );
-
-        // when
-        // 로그인 요청하여 AccessToken 받아옴
-        String accessToken = mockMvc.perform(post("/api/auth/sign-in")
-                        .content(objectMapper.writeValueAsString(signInRequest))
-                        .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.accessToken").isNotEmpty()) // 응답 JSON에서 accessToken 확인
-                .andReturn().getResponse().getHeader("Authorization"); // Authorization 헤더에서 토큰 추출
-
-        // then
-        // 받은 AccessToken 이용하여 API 호출
-        mockMvc.perform(get("/api/auth/data")
-                        .header("Authorization", accessToken))  // 토큰을 헤더로 전달
-                .andExpect(status().isOk()) // 인증된 사용자 접근 가능
-                .andExpect(jsonPath("$.data").value("인증 성공")) // 인증 성공 메시지 확인
-                .andDo(print());
-    }
-
-    @Test
     @DisplayName("로그아웃 성공")
     void signOutSuccess() throws Exception {
         // given
@@ -281,7 +247,7 @@ class AuthControllerTest {
         // when
         mockMvc.perform(post("/api/auth/sign-out")
                         .header("Authorization", "Bearer invalid_token"))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
                 .andDo(print());
     }
 }

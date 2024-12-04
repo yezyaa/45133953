@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: sk
+  config:
+    import: optional:file:.env[.properties]
   h2:
     console:
       enabled: true
