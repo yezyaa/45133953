@@ -6,10 +6,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,17 +35,6 @@ public class Board extends BaseEntity {
     @Column(name = "has_attachments", nullable = false)
     private boolean hasAttachments = false; // 첨부파일 여부
 
-    @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted = false; // 삭제 여부
-
-    @CreatedDate
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Attachment> attachments = new ArrayList<>();
 
@@ -65,10 +51,6 @@ public class Board extends BaseEntity {
         this.title = title;
         this.content = content;
         this.hasAttachments = hasAttachments;
-    }
-
-    public void delete() {
-        this.isDeleted = true;
     }
 
     public void increaseViews() {
