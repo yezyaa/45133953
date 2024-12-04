@@ -66,4 +66,9 @@ public class Board extends BaseEntity {
     public void increaseViews() {
         this.views++;
     }
+
+    public void deleteAttachments() {
+        this.attachments.forEach(Attachment::delete);
+    }
+
 }
