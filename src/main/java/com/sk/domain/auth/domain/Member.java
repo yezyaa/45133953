@@ -1,6 +1,5 @@
 package com.sk.domain.auth.domain;
 
-import com.sk.domain.board.domain.Board;
 import com.sk.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -10,8 +9,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -41,9 +38,6 @@ public class Member extends BaseEntity {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Board> boards = new ArrayList<>(); // 게시글 목록
 
     public static Member of(String email, String name, String password) {
         Member user = new Member();
