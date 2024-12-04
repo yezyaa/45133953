@@ -38,13 +38,15 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Attachment> attachments = new ArrayList<>();
 
+    public Board(Member member, String title, String content, boolean hasAttachments) {
+        this.member = member;
+        this.title = title;
+        this.content = content;
+        this.hasAttachments = hasAttachments;
+    }
+
     public static Board of(Member member, String title, String content, boolean hasAttachments) {
-        Board board = new Board();
-        board.member = member;
-        board.title = title;
-        board.content = content;
-        board.hasAttachments = hasAttachments;
-        return board;
+        return new Board(member, title, content, hasAttachments);
     }
 
     public void update(String title, String content, boolean hasAttachments) {
