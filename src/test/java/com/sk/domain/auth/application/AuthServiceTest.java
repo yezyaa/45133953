@@ -7,7 +7,7 @@ import com.sk.domain.auth.exception.DuplicateEmailException;
 import com.sk.domain.auth.exception.InvalidEmailOrPasswordException;
 import com.sk.domain.auth.exception.InvalidTokenException;
 import com.sk.domain.auth.exception.PasswordMismatchException;
-import com.sk.domain.auth.repository.AuthRepository;
+import com.sk.domain.auth.repository.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +25,7 @@ class AuthServiceTest {
     private AuthService authService;
 
     @Autowired
-    private AuthRepository authRepository;
+    private MemberRepository authRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

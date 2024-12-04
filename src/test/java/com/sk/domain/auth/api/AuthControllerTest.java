@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sk.domain.auth.api.dto.request.SignInRequest;
 import com.sk.domain.auth.api.dto.request.SignUpRequest;
 import com.sk.domain.auth.domain.Member;
-import com.sk.domain.auth.repository.AuthRepository;
+import com.sk.domain.auth.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class AuthControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private AuthRepository authRepository;
+    private MemberRepository authRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

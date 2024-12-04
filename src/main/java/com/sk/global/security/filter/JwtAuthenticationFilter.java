@@ -2,7 +2,7 @@ package com.sk.global.security.filter;
 
 import com.sk.domain.auth.domain.Member;
 import com.sk.domain.auth.exception.UserNotFoundException;
-import com.sk.domain.auth.repository.AuthRepository;
+import com.sk.domain.auth.repository.MemberRepository;
 import com.sk.global.security.CustomUserDetails;
 import com.sk.global.security.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
@@ -23,7 +23,7 @@ import java.util.Collections;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final AuthRepository authRepository;
+    private final MemberRepository authRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

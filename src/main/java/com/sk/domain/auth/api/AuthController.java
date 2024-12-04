@@ -54,17 +54,6 @@ public class AuthController {
                 ));
     }
 
-    // 로그인 인증 테스트 API
-    @GetMapping("/data")
-    public ResponseEntity<ApiSuccessResponse<String>> getData() {
-        return ResponseEntity.ok()
-                .body(ApiSuccessResponse.of(
-                        HttpStatus.OK,
-                        "/api/auth/data",
-                        "인증 성공"
-                ));
-    }
-
     // 로그아웃
     @PostMapping("/sign-out")
     public ResponseEntity<ApiSuccessResponse<Void>> signOut(HttpServletRequest servRequest) {
