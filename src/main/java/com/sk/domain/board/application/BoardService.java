@@ -1,7 +1,6 @@
 package com.sk.domain.board.application;
 
 import com.sk.domain.auth.domain.Member;
-import com.sk.domain.auth.exception.AccessDeniedException;
 import com.sk.domain.auth.exception.UserNotFoundException;
 import com.sk.domain.auth.repository.MemberRepository;
 import com.sk.domain.board.api.dto.request.BoardCreateRequest;
@@ -68,16 +67,11 @@ public class BoardService {
     @Transactional
     public void updateBoard(Long memberId, Long boardId, BoardUpdateRequest boardUpdateRequest) {
 
-        // 게시글 조회
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(BoardNotFoundException::new);
 
-        // 작성자 확인
-        if (!board.getMember().getId().equals(memberId)) {
-            throw new AccessDeniedException();
-        }
+        board.validateAuthor(memberId);
 
-        // 게시글 수정
         board.update(
                 boardUpdateRequest.title(),
                 boardUpdateRequest.content(),
@@ -118,9 +112,7 @@ public class BoardService {
         Board board = boardRepository.findByIdAndIsDeletedFalse(boardId)
                 .orElseThrow(BoardNotFoundException::new);
 
-        if (!board.getMember().getId().equals(memberId)) {
-            throw new AccessDeniedException();
-        }
+        board.validateAuthor(memberId);
 
         board.deleteAttachments();
         board.delete();

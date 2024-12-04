@@ -1,6 +1,7 @@
 package com.sk.domain.board.domain;
 
 import com.sk.domain.auth.domain.Member;
+import com.sk.domain.auth.exception.AccessDeniedException;
 import com.sk.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -71,4 +72,11 @@ public class Board extends BaseEntity {
         this.attachments.forEach(Attachment::delete);
     }
 
+    // 작성자 확인
+    public void validateAuthor(Long memberId) {
+        if (!this.member.getId().equals(memberId)) {
+            throw new AccessDeniedException();
+        }
+    }
+    
 }
