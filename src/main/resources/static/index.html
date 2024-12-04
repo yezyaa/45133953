@@ -88,6 +88,17 @@
                     <li>필드 값 미입력 시 유효성 검사 예외 발생</li>
                     <li>비밀번호 암호화 후 회원 데이터 저장</li>
                 </ul>
+                <p><strong>테스트:</strong></p>
+                <ul>
+                    <li>회원가입 성공</li>
+                    <li>회원가입 실패 - 중복된 이메일</li>
+                    <li>회원가입 실패 - 유효성 검증(필드 누락)</li>
+                    <li>회원가입 실패 - 유효성 검증(잘못된 이메일 형식)</li>
+                    <li>회원가입 실패 - 비밀번호 불일치</li>
+                    <li><img src="images/sign-up-1.png"></li>
+                    <li><img src="images/sign-up-2.png"></li>
+                    <li><img src="images/sign-up-3.png"></li>
+                </ul>
             </li>
             <hr>
             <li>
@@ -100,6 +111,17 @@
                     <li>AccessToken 생성 및 발급</li>
                     <li>발급된 토큰을 DB에 저장</li>
                 </ul>
+                <p><strong>테스트:</strong></p>
+                <ul>
+                    <li>로그인 성공 - AccessToken 발급</li>
+                    <li>로그인 실패 - 존재하지 않는 이메일</li>
+                    <li>로그인 실패 - 잘못된 이메일 형식</li>
+                    <li>로그인 실패 - 잘못된 이메일</li>
+                    <li>로그인 실패 - 잘못된 비밀번호</li>
+                    <li><img src="images/sign-in-1.png"></li>
+                    <li><img src="images/sign-in-2.png"></li>
+                    <li><img src="images/sign-in-3.png"></li>
+                </ul>
             </li>
             <hr>
             <li>
@@ -109,6 +131,15 @@
                 <p><strong>주요 기능:</strong></p>
                 <ul>
                     <li>사용자의 AccessToken 삭제</li>
+                </ul>
+                <p><strong>테스트:</strong></p>
+                <ul>
+                    <li>로그아웃 성공</li>
+                    <li>로그아웃 실패 - 유효하지 않은 토큰</li>
+                    <li><img src="images/sign-out-1.png"></li>
+                    <li><img src="images/sign-out-2.png"></li>
+                    <li><img src="images/sign-out-2.png"></li>
+                    <li><img src="images/sign-out-2.png"></li>
                 </ul>
             </li>
             <hr>
@@ -122,6 +153,15 @@
                     <li>제목과 내용을 입력받아 게시글 생성 후 게시글 목록으로 리다이렉트</li>
                     <li>첨부파일이 있는 경우 최대 5개 업로드 가능</li>
                 </ul>
+                <p><strong>테스트:</strong></p>
+                <ul>
+                    <li>게시글 작성 성공 - 첨부파일 미포함</li>
+                    <li>게시글 작성 성공 - 첨부파일 포함</li>
+                    <li>게시글 작성 실패 - 첨부파일 6개 초과</li>
+                    <li><img src="images/board-create-1.png"></li>
+                    <li><img src="images/board-create-2.png"></li>
+                    <li><img src="images/board-create-3.png"></li>
+                </ul>
             </li>
             <hr>
             <li>
@@ -132,6 +172,12 @@
                 <ul>
                     <li>제목, 내용 수정</li>
                     <li>첨부파일 추가/삭제</li>
+                </ul>
+                <p><strong>테스트:</strong></p>
+                <ul>
+                    <li><img src="images/board-update-1.png"></li>
+                    <li><img src="images/board-update-2.png"></li>
+                    <li><img src="images/board-update-3.png"></li>
                 </ul>
             </li>
             <hr>
@@ -144,6 +190,10 @@
                     <li>소프트 딜리트 방식으로 삭제 처리</li>
                     <li>삭제된 게시글은 조회 불가</li>
                 </ul>
+                <p><strong>테스트:</strong></p>
+                <ul>
+                    <li><img src="images/board-delete-1.png"></li>
+                </ul>
             </li>
             <hr>
             <li>
@@ -153,6 +203,10 @@
                 <p><strong>주요 기능:</strong></p>
                 <ul>
                     <li>게시글을 조회할 때마다 조회수 1 증가</li>
+                </ul>
+                <p><strong>테스트:</strong></p>
+                <ul>
+                    <li><img src="images/board-read-1.png"></li>
                 </ul>
             </li>
             <hr>
@@ -165,6 +219,12 @@
                     <li>검색 조건: 아이디(이메일) 또는 제목</li>
                     <li>게시글 정렬: 최신순</li>
                     <li>1페이지당 10개 목록 조회하는 페이지네이션 기능</li>
+                </ul>
+                <p><strong>테스트:</strong></p>
+                <ul>
+                    <li><img src="images/board-read-all-1.png"></li>
+                    <li><img src="images/board-read-all-2.png"></li>
+                    <li><img src="images/board-read-all-3.png"></li>
                 </ul>
             </li>
             <hr>
