@@ -39,7 +39,11 @@ public class Board extends BaseEntity {
     @Column(name = "has_attachments", nullable = false)
     private boolean hasAttachments = false; // 첨부파일 여부
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "board",
+            cascade = CascadeType.REMOVE,
+            fetch = FetchType.LAZY
+    )
     private List<Attachment> attachments = new ArrayList<>();
 
     public Board(Member member, String title, String content, boolean hasAttachments) {
